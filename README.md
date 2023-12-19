@@ -11,3 +11,4 @@ Tech stack:
 - Testing: Storybook (https://storybook.js.org/docs/get-started/install)
 - Date management: DayJs (https://day.js.org/)
 - Import/Export Excel: SheetJs (https://www.npmjs.com/package/xlsx)
+- Data validation: Zod (https://zod.dev/)

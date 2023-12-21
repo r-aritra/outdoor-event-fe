@@ -5,6 +5,7 @@ Tech stack:
 - Build tool: Vite (https://v4.vitejs.dev/guide)
 - Git hooks: Husky (https://typicode.github.io/husky)
 - Internationalization: i18next (https://www.i18next.com)
+- Cloud storage client (object storage): Azure blob (https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/storage/storage-blob)
 - Framework: React/Typescript (https://react.dev/reference/react) / (https://www.typescriptlang.org/docs/)
 - Route management: React router dom (https://reactrouter.com/en/6.21.0)
 - Code formatter: ESLint/Prettier (https://eslint.org/docs/latest/) / (https://prettier.io/docs/en/)

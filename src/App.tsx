@@ -1,17 +1,10 @@
 import './App.css';
-
-import React from 'react';
-
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p className="header">
-          🚀 Vite + React + Typescript 🤘 & <br />
-          Eslint 🔥+ Prettier
-        </p>
-      </header>
-    </div>
+    <p>
+      🚀 Vite + React + Typescript 🤘 & <br />
+      Eslint 🔥+ Prettier
+    </p>
   );
 }
 

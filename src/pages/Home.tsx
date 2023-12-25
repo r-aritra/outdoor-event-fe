@@ -20,7 +20,7 @@ const Home: React.FC = () => {
     console.log(`welcome to home screen as ${role}`);
   }, [cookies.access_token]);
 
-  const [excelData, setExcelData] = useState<any[] | null>(null);
+  const [excelData, setExcelData] = useState<unknown[]>();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];

@@ -21,6 +21,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { z } from 'zod';
 
 import { GoogleButton } from './components/GoogleButton';
 import { TwitterButton } from './components/TwitterButton';
@@ -53,6 +54,17 @@ export function Auth(props: PaperProps) {
     });
   };
 
+  const RegistrationSchema = z.object({
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+  });
+
+  const LoginSchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+  });
+
   const handleSubmit = async () => {
     setVisible(true);
     const data = form.values;
@@ -72,8 +84,10 @@ export function Auth(props: PaperProps) {
         password: data.password,
       };
 
+      const registrationData = RegistrationSchema.parse(datas);
+
       try {
-        const response = await axios.post(apiUrl, datas, { headers });
+        const response = await axios.post(apiUrl, registrationData, { headers });
 
         if (response.status === 201) {
           const apiUrl = 'http://localhost:3000/v1/api/send-otp';
@@ -95,9 +109,16 @@ export function Auth(props: PaperProps) {
       }
     } else {
       try {
-        const response = await axios.post('http://localhost:3000/v1/api/login', {
+
+        const datas = {
           email: data.email,
           password: data.password,
+        };
+
+        const loginData = LoginSchema.parse(datas);
+
+        const response = await axios.post('http://localhost:3000/v1/api/login', {
+          ...loginData,
           device_id,
           device_type,
         });

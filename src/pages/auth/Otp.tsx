@@ -5,9 +5,14 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { object, string } from 'zod';
 
-const OtpDataSchema = object({
+const ValidateSchema = object({
   email: string(),
   otp: string(),
+  device_id: string(),
+});
+
+const ResendSchema = object({
+  email: string(),
   device_id: string(),
 });
 
@@ -25,7 +30,7 @@ const Otp: React.FC = () => {
   };
 
   const handleVerifyOtp = async () => {
-    const validatedData = OtpDataSchema.parse({
+    const validatedData = ValidateSchema.parse({
       email: location.state.email,
       otp,
       device_id: localStorage.getItem('device_id') || '',
@@ -35,14 +40,6 @@ const Otp: React.FC = () => {
     const headers = {
       'Accept-Language': 'en',
     };
-    const device_id = localStorage.getItem('device_id');
-
-    const data = {
-      email: location.state.email,
-      otp,
-      device_id,
-    };
-
     try {
       const response = await axios.post(apiUrl, validatedData, { headers });
 
@@ -66,18 +63,16 @@ const Otp: React.FC = () => {
   };
 
   const handleResendOtp = async () => {
-    const device_id = localStorage.getItem('device_id');
-
     const headers = {
       'Accept-Language': 'en',
     };
 
-    try {
-      const validatedData = OtpDataSchema.parse({
-        email: location.state.email,
-        device_id: localStorage.getItem('device_id') || '',
-      });
+    const validatedData = ResendSchema.parse({
+      email: location.state.email,
+      device_id: localStorage.getItem('device_id') || '',
+    });
 
+    try {
       await axios.post('http://localhost:3000/v1/api/send-otp', validatedData, {
         headers,
       });

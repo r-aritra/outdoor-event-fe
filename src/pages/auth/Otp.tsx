@@ -3,18 +3,8 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { object, string } from 'zod';
 
-const ValidateSchema = object({
-  email: string(),
-  otp: string(),
-  device_id: string(),
-});
-
-const ResendSchema = object({
-  email: string(),
-  device_id: string(),
-});
+import { ResendSchema, ValidateSchema } from '../../utils/validationSchemas';
 
 const Otp: React.FC = () => {
   const [otp, setOtp] = useState('');
@@ -51,7 +41,7 @@ const Otp: React.FC = () => {
         );
         if (response.status === 200) navigate('/auth');
       }
-    } catch (error: any) {
+    } catch (error: Error) {
       if (error.response && error.response.status === 401) {
         snackbar('Plz enter valid OTP... ');
       } else if (error.response && error.response.status === 410) {
@@ -77,7 +67,7 @@ const Otp: React.FC = () => {
         headers,
       });
       snackbar('otp resend to your email ....');
-    } catch (error: any) {
+    } catch (error: Error) {
       if (error.response && error.response.status === 404)
         snackbar('User not found plz enter valid data... ');
       else snackbar(error.massage);

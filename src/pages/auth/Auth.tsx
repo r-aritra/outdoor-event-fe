@@ -21,10 +21,8 @@ import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { z } from 'zod';
 
-import { GoogleButton } from './components/GoogleButton';
-import { TwitterButton } from './components/TwitterButton';
+import { LoginSchema, RegistrationSchema } from '../../utils/validationSchemas';
 
 export function Auth(props: PaperProps) {
   const [type, toggle] = useToggle(['login', 'register']);
@@ -53,17 +51,6 @@ export function Auth(props: PaperProps) {
       message: massage,
     });
   };
-
-  const RegistrationSchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
-  });
-
-  const LoginSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-  });
 
   const handleSubmit = async () => {
     setVisible(true);
@@ -109,7 +96,6 @@ export function Auth(props: PaperProps) {
       }
     } else {
       try {
-
         const datas = {
           email: data.email,
           password: data.password,
@@ -153,12 +139,7 @@ export function Auth(props: PaperProps) {
           Welcome back to booking.com
         </Text>
 
-        <Group grow mb="md" mt="md">
-          <GoogleButton radius="xl">Google</GoogleButton>
-          <TwitterButton radius="xl">Twitter</TwitterButton>
-        </Group>
-
-        <Divider label="Or continue with email" labelPosition="center" my="lg" />
+        <Divider my="lg" />
 
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>

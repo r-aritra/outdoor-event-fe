@@ -1,35 +1,36 @@
-import { useToggle, upperFirst } from '@mantine/hooks'
-import { useForm } from '@mantine/form'
 import {
-  TextInput,
-  PasswordInput,
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-  Button,
-  Divider,
-  Checkbox,
   Anchor,
-  Stack,
+  Button,
+  Checkbox,
+  Divider,
   Flex,
+  Group,
   LoadingOverlay,
-} from '@mantine/core'
+  Paper,
+  PaperProps,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { upperFirst, useToggle } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { GoogleButton } from './components/GoogleButton'
-import { TwitterButton } from './components/TwitterButton'
-import axios from 'axios'
-import Cookies from 'universal-cookie'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { jwtDecode } from 'jwt-decode'
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
+import { GoogleButton } from './components/GoogleButton';
+import { TwitterButton } from './components/TwitterButton';
 
 export function Auth(props: PaperProps) {
-  const [type, toggle] = useToggle(['login', 'register'])
-  const [device_id] = useState('12345')
-  const [device_type] = useState('android')
-  const [visible, setVisible] = useState(false)
-  const navigate = useNavigate()
+  const [type, toggle] = useToggle(['login', 'register']);
+  const [device_id] = useState('12345');
+  const [device_type] = useState('android');
+  const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       email: '',
@@ -41,88 +42,83 @@ export function Auth(props: PaperProps) {
     validate: {
       email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
       password: (val: string) =>
-        val.length <= 6
-          ? 'Password should include at least 6 characters'
-          : null,
+        val.length <= 6 ? 'Password should include at least 6 characters' : null,
     },
-  })
+  });
 
-  const snackbar = (massage : string) => {
+  const snackbar = (massage: string) => {
     notifications.show({
       title: 'Oops...',
       message: massage,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async () => {
-    setVisible(true)
-    const data = form.values
+    setVisible(true);
+    const data = form.values;
 
     if (type === 'register') {
       const apiUrl = data.terms
         ? 'http://localhost:3000/v1/api/register-vendor'
-        : 'http://localhost:3000/v1/api/register-user'
+        : 'http://localhost:3000/v1/api/register-user';
 
       const headers = {
         'Accept-Language': 'en',
-      }
+      };
 
       const datas = {
         name: data.name,
         email: data.email,
         password: data.password,
-      }
+      };
 
       try {
-        const response = await axios.post(apiUrl, datas, { headers })
+        const response = await axios.post(apiUrl, datas, { headers });
 
         if (response.status === 201) {
-          const apiUrl = 'http://localhost:3000/v1/api/send-otp'
-          const device_id = Math.floor(
-            100000 + Math.random() * 900000,
-          ).toString()
-          localStorage.setItem('device_id', device_id)
+          const apiUrl = 'http://localhost:3000/v1/api/send-otp';
+          const device_id = Math.floor(100000 + Math.random() * 900000).toString();
+          localStorage.setItem('device_id', device_id);
           const response = await axios.post(
             apiUrl,
             { email: data.email, device_id: device_id },
             { headers },
-          )
+          );
           if (response.status === 200) {
-            navigate('/otpVerification', { state: { email: data.email } })
+            navigate('/otpVerification', { state: { email: data.email } });
           }
         }
       } catch (error: any) {
-        if (error.response && error.response.status === 409) snackbar("User already exists. Please log in.")
-        else snackbar(error.massage)
+        if (error.response && error.response.status === 409)
+          snackbar('User already exists. Please log in.');
+        else snackbar(error.massage);
       }
     } else {
       try {
-        const response = await axios.post(
-          'http://localhost:3000/v1/api/login',
-          {
-            email: data.email,
-            password: data.password,
-            device_id,
-            device_type,
-          },
-        )
+        const response = await axios.post('http://localhost:3000/v1/api/login', {
+          email: data.email,
+          password: data.password,
+          device_id,
+          device_type,
+        });
 
-        const { access_token, refresh_token } = response.data.data
+        const { access_token, refresh_token } = response.data.data;
 
-        const cookies = new Cookies()
-        cookies.set('access_token', access_token, { path: '/' })
-        cookies.set('refresh_token', refresh_token, { path: '/' })
+        const cookies = new Cookies();
+        cookies.set('access_token', access_token, { path: '/' });
+        cookies.set('refresh_token', refresh_token, { path: '/' });
 
-        const user = jwtDecode(access_token)
-        localStorage.setItem('user', JSON.stringify(user))
-        navigate('/')
-      } catch (error : any) {
-        if (error.response && error.response.status === 404) snackbar("User not found plz enter valid data... ")
-        else snackbar(error.massage)
+        const user = jwtDecode(access_token);
+        localStorage.setItem('user', JSON.stringify(user));
+        navigate('/');
+      } catch (error: any) {
+        if (error.response && error.response.status === 404)
+          snackbar('User not found plz enter valid data... ');
+        else snackbar(error.massage);
       }
     }
-    setVisible(false)
-  }
+    setVisible(false);
+  };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
@@ -141,11 +137,7 @@ export function Auth(props: PaperProps) {
           <TwitterButton radius="xl">Twitter</TwitterButton>
         </Group>
 
-        <Divider
-          label="Or continue with email"
-          labelPosition="center"
-          my="lg"
-        />
+        <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
@@ -166,9 +158,7 @@ export function Auth(props: PaperProps) {
               label="Email"
               placeholder="hello@mantine.dev"
               value={form.values.email}
-              onChange={(event) =>
-                form.setFieldValue('email', event.currentTarget.value)
-              }
+              onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
               error={form.errors.email && 'Invalid email'}
               radius="md"
             />
@@ -182,8 +172,7 @@ export function Auth(props: PaperProps) {
                 form.setFieldValue('password', event.currentTarget.value)
               }
               error={
-                form.errors.password &&
-                'Password should include at least 6 characters'
+                form.errors.password && 'Password should include at least 6 characters'
               }
               radius="md"
             />
@@ -218,5 +207,5 @@ export function Auth(props: PaperProps) {
         </form>
       </Paper>
     </Flex>
-  )
+  );
 }

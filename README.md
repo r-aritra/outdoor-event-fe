@@ -1,6 +1,8 @@
 # outdoor-event-fe
+
 Outdoor event management and booking system designed using React.  
 Tech stack:
+
 - Engine: Node (https://nodejs.org/docs/latest-v18.x/api/index.html)
 - Build tool: Vite (https://v4.vitejs.dev/guide)
 - Git hooks: Husky (https://typicode.github.io/husky)

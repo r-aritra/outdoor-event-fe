@@ -1,27 +1,24 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { useCookies } from 'react-cookie'
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
-import { Dropzone, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
-import { Flex, Group, Text, rem } from '@mantine/core';
-import * as XLSX from 'xlsx';
+import { Group } from '@mantine/core';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useDropzone } from 'react-dropzone';
+import * as XLSX from 'xlsx';
 
 const Home: React.FC = () => {
-  const [cookies] = useCookies(['access_token', 'refresh_token'])
-  const [role, serRole] = useState('')
+  const [cookies] = useCookies(['access_token', 'refresh_token']);
+  const [role, serRole] = useState('');
 
   useEffect(() => {
     if (!cookies.access_token) {
-      window.location.href = '/auth'
+      window.location.href = '/auth';
     }
 
-    const storedUserJSON = localStorage.getItem('user')
-    const storedUser = storedUserJSON ? JSON.parse(storedUserJSON) : null
+    const storedUserJSON = localStorage.getItem('user');
+    const storedUser = storedUserJSON ? JSON.parse(storedUserJSON) : null;
 
-    serRole(storedUser.roles)
+    serRole(storedUser.roles);
     console.log(`welcome to home screen as ${role}`);
-
-  }, [cookies.access_token])
+  }, [cookies.access_token]);
 
   const [excelData, setExcelData] = useState<any[] | null>(null);
 
@@ -56,11 +53,8 @@ const Home: React.FC = () => {
     reader.readAsArrayBuffer(file);
   };
 
-
   return (
-
-
-    <Group justify="center" align="center" mih={'100vh'} color='black'>
+    <Group justify="center" align="center" mih={'100vh'} color="black">
       <div>
         <div
           {...getRootProps()}
@@ -86,12 +80,8 @@ const Home: React.FC = () => {
           </div>
         )}
       </div>
-
-
     </Group>
-
-
   );
-}
+};
 
-export default Home
+export default Home;

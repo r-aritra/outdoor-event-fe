@@ -1,10 +1,9 @@
+import React from 'react';
+
+import AppRoutes from './router/AppRoutes';
+
 function App() {
-  return (
-    <p>
-      🚀 Vite + React + Typescript 🤘 & <br />
-      Eslint 🔥+ Prettier
-    </p>
-  );
+  return <AppRoutes />;
 }
 
 export default App;

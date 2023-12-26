@@ -1,0 +1,103 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Outdoor Event Booking API
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000
+paths:
+  /v1/api/register-user:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: User created successfully
+        '409':
+          description: Data already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: Data already exist
+
+  /v1/api/register-vendor:
+    post:
+      summary: Register a new vendor
+      operationId: registerVendor
+      tags:
+        - vendors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Vendor created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Vendor created successfully
+        '409':
+          description: Data already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: Data already exist
+          

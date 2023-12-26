@@ -3,21 +3,24 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDropzone } from 'react-dropzone';
 import * as XLSX from 'xlsx';
+import { useRegisterUser } from '../models/api';
 
 const Home: React.FC = () => {
   const [cookies] = useCookies(['access_token', 'refresh_token']);
   const [role, serRole] = useState('');
 
   useEffect(() => {
-    if (!cookies.access_token) {
-      window.location.href = '/auth';
-    }
+    // if (!cookies.access_token) {
+    //   window.location.href = '/auth';
+    // }
 
-    const storedUserJSON = localStorage.getItem('user');
-    const storedUser = storedUserJSON ? JSON.parse(storedUserJSON) : null;
+    // const storedUserJSON = localStorage.getItem('user');
+    // const storedUser = storedUserJSON ? JSON.parse(storedUserJSON) : null;
 
-    serRole(storedUser.roles);
-    console.log(`welcome to home screen as ${role}`);
+    // serRole(storedUser.roles);
+    // console.log(`welcome to home screen as ${role}`);
+
+    handleRegisterUser();
   }, [cookies.access_token]);
 
   const [excelData, setExcelData] = useState<unknown[]>();
@@ -51,6 +54,24 @@ const Home: React.FC = () => {
     };
 
     reader.readAsArrayBuffer(file);
+  };
+
+  const registerUserMutation = useRegisterUser();
+
+  const handleRegisterUser = async () => {
+    try {
+      // Perform registration
+      const result = await registerUserMutation.mutateAsync({
+        data: {
+          email: '19@gmail.com',
+          name: '19igmail.com',
+          password: '123222123',
+        },
+      });
+      console.log(result); // Process the result as needed
+    } catch (error) {
+      console.error(error); // Handle errors
+    }
   };
 
   return (

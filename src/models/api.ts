@@ -7,12 +7,23 @@
 import { useMutation } from 'react-query';
 import type { MutationFunction, UseMutationOptions } from 'react-query';
 import type {
+  Login200,
+  Login404,
+  LoginBody,
   RegisterUser201,
   RegisterUser409,
   RegisterUserBody,
   RegisterVendor201,
   RegisterVendor409,
   RegisterVendorBody,
+  SendOTP200,
+  SendOTPBody,
+  ValidateOTP200,
+  ValidateOTP401,
+  ValidateOTP410,
+  ValidateOTPBody,
+  VerifyUser200,
+  VerifyUserBody,
 } from './api.schemas';
 import { axiosCustomInstance } from '../lib/axiosCustomInstance';
 import type { ErrorType } from '../lib/axiosCustomInstance';
@@ -171,6 +182,293 @@ export const useRegisterVendor = <
   request?: SecondParameter<typeof axiosCustomInstance>;
 }) => {
   const mutationOptions = getRegisterVendorMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary Send OTP to email for verification
+ */
+export const sendOTP = (
+  sendOTPBody: SendOTPBody,
+  options?: SecondParameter<typeof axiosCustomInstance>,
+) => {
+  return axiosCustomInstance<SendOTP200>(
+    {
+      url: `/v1/api/send-otp`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: sendOTPBody,
+    },
+    options,
+  );
+};
+
+export const getSendOTPMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof sendOTP>>,
+    TError,
+    { data: SendOTPBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof sendOTP>>,
+  TError,
+  { data: SendOTPBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof sendOTP>>,
+    { data: SendOTPBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return sendOTP(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SendOTPMutationResult = NonNullable<Awaited<ReturnType<typeof sendOTP>>>;
+export type SendOTPMutationBody = SendOTPBody;
+export type SendOTPMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Send OTP to email for verification
+ */
+export const useSendOTP = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof sendOTP>>,
+    TError,
+    { data: SendOTPBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}) => {
+  const mutationOptions = getSendOTPMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary Validate OTP for email verification
+ */
+export const validateOTP = (
+  validateOTPBody: ValidateOTPBody,
+  options?: SecondParameter<typeof axiosCustomInstance>,
+) => {
+  return axiosCustomInstance<ValidateOTP200>(
+    {
+      url: `/v1/api/validate-otp`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: validateOTPBody,
+    },
+    options,
+  );
+};
+
+export const getValidateOTPMutationOptions = <
+  TError = ErrorType<ValidateOTP401 | ValidateOTP410>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof validateOTP>>,
+    TError,
+    { data: ValidateOTPBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof validateOTP>>,
+  TError,
+  { data: ValidateOTPBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof validateOTP>>,
+    { data: ValidateOTPBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return validateOTP(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ValidateOTPMutationResult = NonNullable<
+  Awaited<ReturnType<typeof validateOTP>>
+>;
+export type ValidateOTPMutationBody = ValidateOTPBody;
+export type ValidateOTPMutationError = ErrorType<ValidateOTP401 | ValidateOTP410>;
+
+/**
+ * @summary Validate OTP for email verification
+ */
+export const useValidateOTP = <
+  TError = ErrorType<ValidateOTP401 | ValidateOTP410>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof validateOTP>>,
+    TError,
+    { data: ValidateOTPBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}) => {
+  const mutationOptions = getValidateOTPMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary User login
+ */
+export const login = (
+  loginBody: LoginBody,
+  options?: SecondParameter<typeof axiosCustomInstance>,
+) => {
+  return axiosCustomInstance<Login200>(
+    {
+      url: `/v1/api/login`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: loginBody,
+    },
+    options,
+  );
+};
+
+export const getLoginMutationOptions = <
+  TError = ErrorType<Login404>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof login>>,
+    TError,
+    { data: LoginBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof login>>,
+  TError,
+  { data: LoginBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof login>>,
+    { data: LoginBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return login(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>;
+export type LoginMutationBody = LoginBody;
+export type LoginMutationError = ErrorType<Login404>;
+
+/**
+ * @summary User login
+ */
+export const useLogin = <TError = ErrorType<Login404>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof login>>,
+    TError,
+    { data: LoginBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}) => {
+  const mutationOptions = getLoginMutationOptions(options);
+
+  return useMutation(mutationOptions);
+};
+
+/**
+ * @summary Verify user email
+ */
+export const verifyUser = (
+  verifyUserBody: VerifyUserBody,
+  options?: SecondParameter<typeof axiosCustomInstance>,
+) => {
+  return axiosCustomInstance<VerifyUser200>(
+    {
+      url: `/v1/api/verify-user`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: verifyUserBody,
+    },
+    options,
+  );
+};
+
+export const getVerifyUserMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof verifyUser>>,
+    TError,
+    { data: VerifyUserBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof verifyUser>>,
+  TError,
+  { data: VerifyUserBody },
+  TContext
+> => {
+  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof verifyUser>>,
+    { data: VerifyUserBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return verifyUser(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type VerifyUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof verifyUser>>
+>;
+export type VerifyUserMutationBody = VerifyUserBody;
+export type VerifyUserMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Verify user email
+ */
+export const useVerifyUser = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof verifyUser>>,
+    TError,
+    { data: VerifyUserBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof axiosCustomInstance>;
+}) => {
+  const mutationOptions = getVerifyUserMutationOptions(options);
 
   return useMutation(mutationOptions);
 };

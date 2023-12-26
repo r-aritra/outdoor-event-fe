@@ -23,6 +23,45 @@ export const getRegisterVendorMock = () => ({
   message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
 });
 
+export const getSendOTPMock = () => ({
+  code: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+});
+
+export const getValidateOTPMock = () => ({
+  code: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+});
+
+export const getLoginMock = () => ({
+  code: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  data: faker.helpers.arrayElement([
+    {
+      access_token: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+      refresh_token: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+    },
+    undefined,
+  ]),
+  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+});
+
+export const getVerifyUserMock = () => ({
+  code: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+});
+
 export const getOutdoorEventBookingAPIMock = () => [
   http.post('*/v1/api/register-user', async () => {
     await delay(1000);
@@ -36,6 +75,42 @@ export const getOutdoorEventBookingAPIMock = () => [
   http.post('*/v1/api/register-vendor', async () => {
     await delay(1000);
     return new HttpResponse(JSON.stringify(getRegisterVendorMock()), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }),
+  http.post('*/v1/api/send-otp', async () => {
+    await delay(1000);
+    return new HttpResponse(JSON.stringify(getSendOTPMock()), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }),
+  http.post('*/v1/api/validate-otp', async () => {
+    await delay(1000);
+    return new HttpResponse(JSON.stringify(getValidateOTPMock()), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }),
+  http.post('*/v1/api/login', async () => {
+    await delay(1000);
+    return new HttpResponse(JSON.stringify(getLoginMock()), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }),
+  http.post('*/v1/api/verify-user', async () => {
+    await delay(1000);
+    return new HttpResponse(JSON.stringify(getVerifyUserMock()), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

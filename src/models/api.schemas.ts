@@ -4,6 +4,69 @@
  * Outdoor Event Booking API
  * OpenAPI spec version: 1.0.0
  */
+export type VerifyUser200 = {
+  code?: number;
+  message?: string;
+};
+
+export type VerifyUserBody = {
+  email?: string;
+};
+
+export type Login404 = {
+  code?: number;
+  message?: string;
+};
+
+export type Login200Data = {
+  access_token?: string;
+  refresh_token?: string;
+};
+
+export type Login200 = {
+  code?: number;
+  data?: Login200Data;
+  message?: string;
+};
+
+export type LoginBody = {
+  device_id?: string;
+  device_type?: string;
+  email?: string;
+  password?: string;
+};
+
+export type ValidateOTP410 = {
+  code?: number;
+  message?: string;
+};
+
+export type ValidateOTP401 = {
+  code?: number;
+  message?: string;
+};
+
+export type ValidateOTP200 = {
+  code?: number;
+  message?: string;
+};
+
+export type ValidateOTPBody = {
+  device_id?: string;
+  email?: string;
+  otp?: string;
+};
+
+export type SendOTP200 = {
+  code?: number;
+  message?: string;
+};
+
+export type SendOTPBody = {
+  device_id?: string;
+  email?: string;
+};
+
 export type RegisterVendor409 = {
   code?: number;
   message?: string;

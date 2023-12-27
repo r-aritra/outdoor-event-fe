@@ -51,7 +51,7 @@ export default function Login(props: PaperProps) {
       />
       <Paper radius="md" p="xl" withBorder {...props}>
         <Text size="lg" fw={500}>
-          Welcome back to booking.com
+          Welcome to booking.com
         </Text>
 
         <Divider my="lg" />
@@ -84,7 +84,13 @@ export default function Login(props: PaperProps) {
           </Stack>
 
           <Group justify="space-between" mt="xl">
-            <Anchor component="button" type="button" c="dimmed" size="xs">
+            <Anchor
+              component="button"
+              type="button"
+              c="dimmed"
+              size="xs"
+              onClick={() => navigate('/signup')}
+            >
               {"Don't have an account? Register"}{' '}
             </Anchor>
             <Button type="submit" radius="xl">

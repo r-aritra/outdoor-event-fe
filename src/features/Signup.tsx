@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Signup(props: PaperProps) {
   const [visible, setVisible] = useState(false);
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
@@ -26,6 +27,7 @@ export default function Signup(props: PaperProps) {
       name: '',
       password: '',
       terms: true,
+      otp: '',
     },
 
     validate: {
@@ -39,8 +41,16 @@ export default function Signup(props: PaperProps) {
     setVisible(true);
     const data = form.values;
     console.log(data);
-    navigate('/');
+    // Add logic for OTP verification here
+    // For demonstration purposes, let's assume OTP verification is successful
+    setShowOtpInput(true);
     setVisible(false);
+  };
+
+  const handleOtpSubmit = () => {
+    // Add logic for OTP validation here
+    // For demonstration purposes, let's assume OTP validation is successful
+    navigate('/');
   };
 
   return (
@@ -92,12 +102,24 @@ export default function Signup(props: PaperProps) {
             />
 
             <Checkbox
-              label="register as a vendor"
-              checked={form.values.terms}
+              label="Register as a vendor"
+              // checked={form.values.terms}
               onChange={(event) =>
                 form.setFieldValue('terms', event.currentTarget.checked)
               }
             />
+
+            {showOtpInput && (
+              <TextInput
+                required
+                label="Enter OTP"
+                placeholder="123456"
+                value={form.values.otp}
+                onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
+                error={form.errors.otp && 'Invalid OTP'}
+                radius="md"
+              />
+            )}
           </Stack>
 
           <Group justify="space-between" mt="xl">
@@ -110,9 +132,16 @@ export default function Signup(props: PaperProps) {
             >
               {'Already have an account? Login'}
             </Anchor>
-            <Button type="submit" radius="xl">
-              {'Register'}
-            </Button>
+
+            {showOtpInput ? (
+              <Button type="button" onClick={handleOtpSubmit} radius="xl">
+                {'Validate OTP'}
+              </Button>
+            ) : (
+              <Button type="submit" radius="xl">
+                {'Register'}
+              </Button>
+            )}
           </Group>
         </form>
       </Paper>

@@ -24,6 +24,9 @@ const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
         <Route element={<PrivateRoutes />}>
           <Route path="/batch-event/results" element={<BatchEventApprove />} />
           <Route path="/batch-event/register" element={<BatchEventRegister />} />
@@ -31,8 +34,6 @@ const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

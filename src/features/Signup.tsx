@@ -48,6 +48,8 @@ export default function Signup(props: PaperProps) {
   };
 
   const handleOtpSubmit = () => {
+    const data = form.values;
+    console.log(data);
     // Add logic for OTP validation here
     // For demonstration purposes, let's assume OTP validation is successful
     navigate('/');

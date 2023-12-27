@@ -4,97 +4,76 @@
  * Outdoor Event Booking API
  * OpenAPI spec version: 1.0.0
  */
-export type VerifyUser200 = {
+export interface Ok {
   code?: number;
   message?: string;
-};
+}
 
-export type VerifyUserBody = {
-  email?: string;
-};
-
-export type Login404 = {
+export interface DataNotFound {
   code?: number;
   message?: string;
-};
+}
 
-export type Login200Data = {
+export interface OTPExpired {
+  code?: number;
+  message?: string;
+}
+
+export interface OTPNotValid {
+  code?: number;
+  message?: string;
+}
+
+export interface DataAlreadyExists {
+  code?: number;
+  message?: string;
+}
+
+export interface UserCreated {
+  code?: number;
+  message?: string;
+}
+
+export interface OTPValidate {
+  code?: number;
+  message?: string;
+}
+
+export type LoginData = {
   access_token?: string;
   refresh_token?: string;
 };
 
-export type Login200 = {
+export interface Login {
   code?: number;
-  data?: Login200Data;
+  data?: LoginData;
   message?: string;
-};
+}
 
-export type LoginBody = {
+export interface ValidateOTPRequest {
+  device_id?: string;
+  email?: string;
+  otp?: string;
+}
+
+export interface SendOTPRequest {
+  device_id?: string;
+  email?: string;
+}
+
+export interface LoginRequest {
   device_id?: string;
   device_type?: string;
   email?: string;
   password?: string;
-};
+}
 
-export type ValidateOTP410 = {
-  code?: number;
-  message?: string;
-};
-
-export type ValidateOTP401 = {
-  code?: number;
-  message?: string;
-};
-
-export type ValidateOTP200 = {
-  code?: number;
-  message?: string;
-};
-
-export type ValidateOTPBody = {
-  device_id?: string;
+export interface VerifyUserRequest {
   email?: string;
-  otp?: string;
-};
+}
 
-export type SendOTP200 = {
-  code?: number;
-  message?: string;
-};
-
-export type SendOTPBody = {
-  device_id?: string;
-  email?: string;
-};
-
-export type RegisterVendor409 = {
-  code?: number;
-  message?: string;
-};
-
-export type RegisterVendor201 = {
-  code?: number;
-  message?: string;
-};
-
-export type RegisterVendorBody = {
-  email?: string;
-  name?: string;
-  password?: string;
-};
-
-export type RegisterUser409 = {
-  code?: number;
-  message?: string;
-};
-
-export type RegisterUser201 = {
-  code?: number;
-  message?: string;
-};
-
-export type RegisterUserBody = {
-  email?: string;
-  name?: string;
-  password?: string;
-};
+export interface UserRequest {
+  email: string;
+  name: string;
+  password: string;
+}

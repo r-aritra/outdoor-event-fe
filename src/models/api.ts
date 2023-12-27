@@ -7,23 +7,19 @@
 import { useMutation } from 'react-query';
 import type { MutationFunction, UseMutationOptions } from 'react-query';
 import type {
-  Login200,
-  Login404,
-  LoginBody,
-  RegisterUser201,
-  RegisterUser409,
-  RegisterUserBody,
-  RegisterVendor201,
-  RegisterVendor409,
-  RegisterVendorBody,
-  SendOTP200,
-  SendOTPBody,
-  ValidateOTP200,
-  ValidateOTP401,
-  ValidateOTP410,
-  ValidateOTPBody,
-  VerifyUser200,
-  VerifyUserBody,
+  DataAlreadyExists,
+  DataNotFound,
+  Login,
+  LoginRequest,
+  OTPExpired,
+  OTPNotValid,
+  OTPValidate,
+  Ok,
+  SendOTPRequest,
+  UserCreated,
+  UserRequest,
+  ValidateOTPRequest,
+  VerifyUserRequest,
 } from './api.schemas';
 import { axiosCustomInstance } from '../lib/axiosCustomInstance';
 import type { ErrorType } from '../lib/axiosCustomInstance';
@@ -40,42 +36,42 @@ type SecondParameter<T extends (...args: any) => any> = T extends (
  * @summary Register a new user
  */
 export const registerUser = (
-  registerUserBody: RegisterUserBody,
+  userRequest: UserRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<RegisterUser201>(
+  return axiosCustomInstance<UserCreated>(
     {
       url: `/v1/api/register-user`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: registerUserBody,
+      data: userRequest,
     },
     options,
   );
 };
 
 export const getRegisterUserMutationOptions = <
-  TError = ErrorType<RegisterUser409>,
+  TError = ErrorType<DataAlreadyExists>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof registerUser>>,
     TError,
-    { data: RegisterUserBody },
+    { data: UserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof registerUser>>,
   TError,
-  { data: RegisterUserBody },
+  { data: UserRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof registerUser>>,
-    { data: RegisterUserBody }
+    { data: UserRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -88,20 +84,20 @@ export const getRegisterUserMutationOptions = <
 export type RegisterUserMutationResult = NonNullable<
   Awaited<ReturnType<typeof registerUser>>
 >;
-export type RegisterUserMutationBody = RegisterUserBody;
-export type RegisterUserMutationError = ErrorType<RegisterUser409>;
+export type RegisterUserMutationBody = UserRequest;
+export type RegisterUserMutationError = ErrorType<DataAlreadyExists>;
 
 /**
  * @summary Register a new user
  */
 export const useRegisterUser = <
-  TError = ErrorType<RegisterUser409>,
+  TError = ErrorType<DataAlreadyExists>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof registerUser>>,
     TError,
-    { data: RegisterUserBody },
+    { data: UserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
@@ -115,42 +111,42 @@ export const useRegisterUser = <
  * @summary Register a new vendor
  */
 export const registerVendor = (
-  registerVendorBody: RegisterVendorBody,
+  userRequest: UserRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<RegisterVendor201>(
+  return axiosCustomInstance<UserCreated>(
     {
       url: `/v1/api/register-vendor`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: registerVendorBody,
+      data: userRequest,
     },
     options,
   );
 };
 
 export const getRegisterVendorMutationOptions = <
-  TError = ErrorType<RegisterVendor409>,
+  TError = ErrorType<DataAlreadyExists>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof registerVendor>>,
     TError,
-    { data: RegisterVendorBody },
+    { data: UserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof registerVendor>>,
   TError,
-  { data: RegisterVendorBody },
+  { data: UserRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof registerVendor>>,
-    { data: RegisterVendorBody }
+    { data: UserRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -163,20 +159,20 @@ export const getRegisterVendorMutationOptions = <
 export type RegisterVendorMutationResult = NonNullable<
   Awaited<ReturnType<typeof registerVendor>>
 >;
-export type RegisterVendorMutationBody = RegisterVendorBody;
-export type RegisterVendorMutationError = ErrorType<RegisterVendor409>;
+export type RegisterVendorMutationBody = UserRequest;
+export type RegisterVendorMutationError = ErrorType<DataAlreadyExists>;
 
 /**
  * @summary Register a new vendor
  */
 export const useRegisterVendor = <
-  TError = ErrorType<RegisterVendor409>,
+  TError = ErrorType<DataAlreadyExists>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof registerVendor>>,
     TError,
-    { data: RegisterVendorBody },
+    { data: UserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
@@ -190,42 +186,42 @@ export const useRegisterVendor = <
  * @summary Send OTP to email for verification
  */
 export const sendOTP = (
-  sendOTPBody: SendOTPBody,
+  sendOTPRequest: SendOTPRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<SendOTP200>(
+  return axiosCustomInstance<Ok>(
     {
       url: `/v1/api/send-otp`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: sendOTPBody,
+      data: sendOTPRequest,
     },
     options,
   );
 };
 
 export const getSendOTPMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<DataNotFound>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof sendOTP>>,
     TError,
-    { data: SendOTPBody },
+    { data: SendOTPRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof sendOTP>>,
   TError,
-  { data: SendOTPBody },
+  { data: SendOTPRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof sendOTP>>,
-    { data: SendOTPBody }
+    { data: SendOTPRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -236,17 +232,20 @@ export const getSendOTPMutationOptions = <
 };
 
 export type SendOTPMutationResult = NonNullable<Awaited<ReturnType<typeof sendOTP>>>;
-export type SendOTPMutationBody = SendOTPBody;
-export type SendOTPMutationError = ErrorType<unknown>;
+export type SendOTPMutationBody = SendOTPRequest;
+export type SendOTPMutationError = ErrorType<DataNotFound>;
 
 /**
  * @summary Send OTP to email for verification
  */
-export const useSendOTP = <TError = ErrorType<unknown>, TContext = unknown>(options?: {
+export const useSendOTP = <
+  TError = ErrorType<DataNotFound>,
+  TContext = unknown,
+>(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof sendOTP>>,
     TError,
-    { data: SendOTPBody },
+    { data: SendOTPRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
@@ -260,42 +259,42 @@ export const useSendOTP = <TError = ErrorType<unknown>, TContext = unknown>(opti
  * @summary Validate OTP for email verification
  */
 export const validateOTP = (
-  validateOTPBody: ValidateOTPBody,
+  validateOTPRequest: ValidateOTPRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<ValidateOTP200>(
+  return axiosCustomInstance<OTPValidate>(
     {
       url: `/v1/api/validate-otp`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: validateOTPBody,
+      data: validateOTPRequest,
     },
     options,
   );
 };
 
 export const getValidateOTPMutationOptions = <
-  TError = ErrorType<ValidateOTP401 | ValidateOTP410>,
+  TError = ErrorType<OTPNotValid | OTPExpired>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof validateOTP>>,
     TError,
-    { data: ValidateOTPBody },
+    { data: ValidateOTPRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof validateOTP>>,
   TError,
-  { data: ValidateOTPBody },
+  { data: ValidateOTPRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof validateOTP>>,
-    { data: ValidateOTPBody }
+    { data: ValidateOTPRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -308,20 +307,20 @@ export const getValidateOTPMutationOptions = <
 export type ValidateOTPMutationResult = NonNullable<
   Awaited<ReturnType<typeof validateOTP>>
 >;
-export type ValidateOTPMutationBody = ValidateOTPBody;
-export type ValidateOTPMutationError = ErrorType<ValidateOTP401 | ValidateOTP410>;
+export type ValidateOTPMutationBody = ValidateOTPRequest;
+export type ValidateOTPMutationError = ErrorType<OTPNotValid | OTPExpired>;
 
 /**
  * @summary Validate OTP for email verification
  */
 export const useValidateOTP = <
-  TError = ErrorType<ValidateOTP401 | ValidateOTP410>,
+  TError = ErrorType<OTPNotValid | OTPExpired>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof validateOTP>>,
     TError,
-    { data: ValidateOTPBody },
+    { data: ValidateOTPRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
@@ -335,42 +334,42 @@ export const useValidateOTP = <
  * @summary User login
  */
 export const login = (
-  loginBody: LoginBody,
+  loginRequest: LoginRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<Login200>(
+  return axiosCustomInstance<Login>(
     {
       url: `/v1/api/login`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: loginBody,
+      data: loginRequest,
     },
     options,
   );
 };
 
 export const getLoginMutationOptions = <
-  TError = ErrorType<Login404>,
+  TError = ErrorType<DataNotFound>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof login>>,
     TError,
-    { data: LoginBody },
+    { data: LoginRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof login>>,
   TError,
-  { data: LoginBody },
+  { data: LoginRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof login>>,
-    { data: LoginBody }
+    { data: LoginRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -381,17 +380,17 @@ export const getLoginMutationOptions = <
 };
 
 export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>;
-export type LoginMutationBody = LoginBody;
-export type LoginMutationError = ErrorType<Login404>;
+export type LoginMutationBody = LoginRequest;
+export type LoginMutationError = ErrorType<DataNotFound>;
 
 /**
  * @summary User login
  */
-export const useLogin = <TError = ErrorType<Login404>, TContext = unknown>(options?: {
+export const useLogin = <TError = ErrorType<DataNotFound>, TContext = unknown>(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof login>>,
     TError,
-    { data: LoginBody },
+    { data: LoginRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
@@ -405,15 +404,15 @@ export const useLogin = <TError = ErrorType<Login404>, TContext = unknown>(optio
  * @summary Verify user email
  */
 export const verifyUser = (
-  verifyUserBody: VerifyUserBody,
+  verifyUserRequest: VerifyUserRequest,
   options?: SecondParameter<typeof axiosCustomInstance>,
 ) => {
-  return axiosCustomInstance<VerifyUser200>(
+  return axiosCustomInstance<Ok>(
     {
       url: `/v1/api/verify-user`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: verifyUserBody,
+      data: verifyUserRequest,
     },
     options,
   );
@@ -426,21 +425,21 @@ export const getVerifyUserMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof verifyUser>>,
     TError,
-    { data: VerifyUserBody },
+    { data: VerifyUserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;
 }): UseMutationOptions<
   Awaited<ReturnType<typeof verifyUser>>,
   TError,
-  { data: VerifyUserBody },
+  { data: VerifyUserRequest },
   TContext
 > => {
   const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof verifyUser>>,
-    { data: VerifyUserBody }
+    { data: VerifyUserRequest }
   > = (props) => {
     const { data } = props ?? {};
 
@@ -453,7 +452,7 @@ export const getVerifyUserMutationOptions = <
 export type VerifyUserMutationResult = NonNullable<
   Awaited<ReturnType<typeof verifyUser>>
 >;
-export type VerifyUserMutationBody = VerifyUserBody;
+export type VerifyUserMutationBody = VerifyUserRequest;
 export type VerifyUserMutationError = ErrorType<unknown>;
 
 /**
@@ -463,7 +462,7 @@ export const useVerifyUser = <TError = ErrorType<unknown>, TContext = unknown>(o
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof verifyUser>>,
     TError,
-    { data: VerifyUserBody },
+    { data: VerifyUserRequest },
     TContext
   >;
   request?: SecondParameter<typeof axiosCustomInstance>;

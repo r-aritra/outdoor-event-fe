@@ -2,8 +2,6 @@ openapi: '3.0.0'
 info:
   version: 1.0.0
   title: Outdoor Event Booking API
-  license:
-    name: MIT
 servers:
   - url: http://localhost:3000
 paths:
@@ -16,41 +14,20 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/UserRequest'
       responses:
         '201':
           description: User created successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 201
-                  message:
-                    type: string
-                    example: User created successfully
+                $ref: '#/components/schemas/UserCreated'
         '409':
           description: Data already exists
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 409
-                  message:
-                    type: string
-                    example: Data already exist
+                $ref: '#/components/schemas/DataAlreadyExists'
 
   /v1/api/register-vendor:
     post:
@@ -61,41 +38,20 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/UserRequest'
       responses:
         '201':
           description: Vendor created successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 201
-                  message:
-                    type: string
-                    example: Vendor created successfully
+                $ref: '#/components/schemas/UserCreated'
         '409':
           description: Data already exists
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 409
-                  message:
-                    type: string
-                    example: Data already exist
+                $ref: '#/components/schemas/DataAlreadyExists'
 
   /v1/api/send-otp:
     post:
@@ -106,26 +62,20 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                device_id:
-                  type: string
+              $ref: '#/components/schemas/SendOTPRequest'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: OK
+                $ref: '#/components/schemas/Ok'
+        404:
+          description: Data not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataNotFound'
 
   /v1/api/validate-otp:
     post:
@@ -136,54 +86,26 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                otp:
-                  type: string
-                device_id:
-                  type: string
+              $ref: '#/components/schemas/ValidateOTPRequest'
       responses:
         200:
           description: OTP has been verified
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: OTP has been verified
+                $ref: '#/components/schemas/OTPValidate'
         401:
           description: OTP is not valid
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: OTP is not valid
+                $ref: '#/components/schemas/OTPNotValid'
         410:
           description: OTP has been expired
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 410
-                  message:
-                    type: string
-                    example: OTP has been expired
+                $ref: '#/components/schemas/OTPExpired'
 
   /v1/api/login:
     post:
@@ -194,52 +116,21 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-                device_id:
-                  type: string
-                device_type:
-                  type: string
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         200:
           description: User login successful
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: User login successful
-                  data:
-                    type: object
-                    properties:
-                      access_token:
-                        type: string
-                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc5LCJyb2xlcyI6InVzZXIiLCJpYXQiOjE3MDI1NDg5OTUsImV4cCI6MTcwMjU0OTg5NX0.I2Or2469XWBVJ7eSEpSxU0WyFIprG1Rsasasasasasa"
-                      refresh_token:
-                        type: string
-                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc5LCJyb2xlcyI6InVzZXIiLCJpYXQiOjE3MDI1NDg5OTUsImV4cCI6MTcwMzE1Mzc5NX0.vS-Y1Xa6-K1GVHW9HsiyJvPd86uaiG3wlMz4yhGA4Y8"
+                $ref: '#/components/schemas/Login'
+                
         404:
           description: Data not found
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: Data not found
+                $ref: '#/components/schemas/DataNotFound'
 
   /v1/api/verify-user:
     post:
@@ -250,21 +141,156 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
+              $ref: '#/components/schemas/VerifyUserRequest'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: OK
+                $ref: '#/components/schemas/Ok'
+                    
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: rutvik
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: password123
+      required:
+        - name
+        - email
+        - password
+        
+    VerifyUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        device_id:
+          type: string
+        device_type:
+          type: string
+
+    SendOTPRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        device_id:
+          type: string
+          
+    ValidateOTPRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        otp:
+          type: string
+        device_id:
+          type: string
+          
+    Login:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: User login successful
+        data:
+          type: object
+          properties:
+            access_token:
+              type: string
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc5LCJyb2xlcyI6InVzZXIiLCJpYXQiOjE3MDI1NDg5OTUsImV4cCI6MTcwMjU0OTg5NX0.I2Or2469XWBVJ7eSEpSxU0WyFIprG1Rsasasasasasa"
+            refresh_token:
+              type: string
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc5LCJyb2xlcyI6InVzZXIiLCJpYXQiOjE3MDI1NDg5OTUsImV4cCI6MTcwMzE1Mzc5NX0.vS-Y1Xa6-K1GVHW9HsiyJvPd86uaiG3wlMz4yhGA4Y8"
+          
+    OTPValidate:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: OTP has been verified
+        
+    UserCreated:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: User created successfully
+          
+    DataAlreadyExists:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 409
+        message:
+          type: string
+          example: Data already exist
+          
+    OTPNotValid:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: OTP is not valid
+          
+    OTPExpired:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 410
+        message:
+          type: string
+          example: OTP has been expired
+
+    DataNotFound:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Data not found
+          
+    Ok:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: OK

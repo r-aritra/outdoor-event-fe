@@ -7,12 +7,12 @@ import {
   Routes,
 } from 'react-router-dom';
 
-import BatchEventApprove from '../features/BatchEventApprove';
-import BatchEventRegister from '../features/BatchEventRegister';
-import BatchEventResults from '../features/BatchEventResults';
-import Home from '../features/Home';
-import Login from '../features/Login';
-import Signup from '../features/Signup';
+import BatchEventApprove from '../features/BatchEventApprove/BatchEventApprove';
+import BatchEventRegister from '../features/BatchEventRegister/BatchEventRegister';
+import BatchEventResults from '../features/BatchEventResults/BatchEventResults';
+import Home from '../features/Home/Home';
+import Login from '../features/Login/Login';
+import Signup from '../features/Signup/Signup';
 
 const isAuthenticated = false;
 

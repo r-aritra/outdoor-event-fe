@@ -7,7 +7,6 @@ import {
   Group,
   LoadingOverlay,
   Paper,
-  PaperProps,
   PasswordInput,
   Stack,
   Text,
@@ -17,7 +16,7 @@ import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Signup(props: PaperProps) {
+export default function Signup() {
   const [visible, setVisible] = useState(false);
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
@@ -62,7 +61,7 @@ export default function Signup(props: PaperProps) {
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
       />
-      <Paper radius="md" p="xl" withBorder {...props}>
+      <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
           Welcome to booking.com
         </Text>

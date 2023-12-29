@@ -11,7 +11,6 @@ export const ShortPasswordForm: Story = {
     const canvas = within(canvasElement);
 
     const signupButton = canvas.getByTestId('button-signup');
-    expect(signupButton).toBeDisabled();
 
     // Test Case: Short password
     await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
@@ -24,6 +23,12 @@ export const ShortPasswordForm: Story = {
       delay: 50,
     });
 
-    expect(signupButton).toBeDisabled();
+    await userEvent.click(signupButton, {
+      delay: 50,
+    });
+
+    expect(
+      canvas.getByText('Password should include at least 6 characters'),
+    ).toBeInTheDocument();
   },
 };

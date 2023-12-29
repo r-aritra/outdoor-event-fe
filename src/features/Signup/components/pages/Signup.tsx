@@ -144,17 +144,11 @@ export default function Signup() {
                 onClick={handleOtpSubmit}
                 radius="xl"
                 data-testid="button-validation"
-                disabled={!form.isValid()}
               >
                 {'Validate OTP'}
               </Button>
             ) : (
-              <Button
-                type="submit"
-                radius="xl"
-                data-testid="button-signup"
-                disabled={!form.isValid()}
-              >
+              <Button type="submit" radius="xl" data-testid="button-signup">
                 {'Register'}
               </Button>
             )}

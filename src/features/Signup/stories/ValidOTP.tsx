@@ -11,7 +11,6 @@ export const ValidOTP: Story = {
     const canvas = within(canvasElement);
 
     const signupButton = canvas.getByTestId('button-signup');
-    expect(signupButton).toBeDisabled();
 
     // Test Case: Valid email and password
     await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
@@ -23,8 +22,6 @@ export const ValidOTP: Story = {
     await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
       delay: 50,
     });
-
-    expect(signupButton).toBeEnabled();
 
     await userEvent.click(signupButton);
 

@@ -1,4 +1,3 @@
-import { expect } from '@storybook/jest';
 import { StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 
@@ -11,7 +10,6 @@ export const ValidForm: Story = {
     const canvas = within(canvasElement);
 
     const signupButton = canvas.getByTestId('button-signup');
-    expect(signupButton).toBeDisabled();
 
     // Test Case: Valid email and password
     await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
@@ -24,6 +22,8 @@ export const ValidForm: Story = {
       delay: 100,
     });
 
-    expect(signupButton).toBeEnabled();
+    await userEvent.click(signupButton, {
+      delay: 50,
+    });
   },
 };

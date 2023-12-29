@@ -21,9 +21,15 @@ export const ValidForm: Story = {
     expect(signupButton).toBeDisabled();
 
     // Test Case: Valid email and password
-    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik');
-    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
-    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
+    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
+      delay: 100,
+    });
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
+      delay: 100,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
+      delay: 100,
+    });
 
     expect(signupButton).toBeEnabled();
   },
@@ -37,9 +43,15 @@ export const InvalidEmailForm: Story = {
     expect(signupButton).toBeDisabled();
 
     // Test Case: Invalid email
-    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik');
-    await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail');
-    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
+    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
+      delay: 50,
+    });
 
     expect(signupButton).toBeDisabled();
   },
@@ -53,9 +65,15 @@ export const ShortPasswordForm: Story = {
     expect(signupButton).toBeDisabled();
 
     // Test Case: Short password
-    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik');
-    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
-    await userEvent.type(canvas.getByTestId('password-input'), 'short');
+    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'short', {
+      delay: 50,
+    });
 
     expect(signupButton).toBeDisabled();
   },
@@ -69,9 +87,15 @@ export const ValidOTP: Story = {
     expect(signupButton).toBeDisabled();
 
     // Test Case: Valid email and password
-    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik');
-    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
-    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
+    await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
+      delay: 50,
+    });
 
     expect(signupButton).toBeEnabled();
 
@@ -80,7 +104,9 @@ export const ValidOTP: Story = {
     const validateOTPButton = canvas.getByTestId('button-validation');
     expect(validateOTPButton).toBeInTheDocument();
 
-    await userEvent.type(canvas.getByTestId('OTP-input'), '123321');
+    await userEvent.type(canvas.getByTestId('OTP-input'), '123321', {
+      delay: 50,
+    });
 
     await userEvent.click(validateOTPButton);
   },

@@ -21,8 +21,12 @@ export const ValidForm: Story = {
     expect(loginButton).toBeDisabled();
 
     // Test Case: Valid email and password
-    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
-    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
+      delay: 50,
+    });
 
     expect(loginButton).toBeEnabled();
   },
@@ -36,9 +40,12 @@ export const InvalidEmailForm: Story = {
     expect(loginButton).toBeDisabled();
 
     // Test Case: Invalid email
-    await userEvent.clear(canvas.getByTestId('email-input'));
-    await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail');
-    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
+    await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321', {
+      delay: 50,
+    });
 
     expect(loginButton).toBeDisabled();
   },
@@ -52,10 +59,12 @@ export const ShortPasswordForm: Story = {
     expect(loginButton).toBeDisabled();
 
     // Test Case: Short password
-    await userEvent.clear(canvas.getByTestId('email-input'));
-    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
-    await userEvent.clear(canvas.getByTestId('password-input'));
-    await userEvent.type(canvas.getByTestId('password-input'), 'short');
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
+      delay: 50,
+    });
+    await userEvent.type(canvas.getByTestId('password-input'), 'short', {
+      delay: 50,
+    });
 
     expect(loginButton).toBeDisabled();
   },

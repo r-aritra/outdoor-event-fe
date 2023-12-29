@@ -127,7 +127,7 @@ export default function Signup() {
             )}
           </Stack>
 
-          <Group justify="space-between" mt="xl" data-testid="button-input">
+          <Group justify="space-between" mt="xl">
             <Anchor
               component="button"
               type="button"

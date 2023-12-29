@@ -11,8 +11,8 @@ import BatchEventApprove from '../features/BatchEventApprove/BatchEventApprove';
 import BatchEventRegister from '../features/BatchEventRegister/BatchEventRegister';
 import BatchEventResults from '../features/BatchEventResults/BatchEventResults';
 import Home from '../features/Home/Home';
-import Login from '../features/Login/Login';
-import Signup from '../features/Signup/Signup';
+import Login from '../features/Login/components/pages/Login';
+import Signup from '../features/Signup/components/pages/Signup';
 
 const isAuthenticated = false;
 

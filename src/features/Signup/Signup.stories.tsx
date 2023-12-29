@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Signup from './Signup';
+import Signup from './components/pages/Signup';
 import { InvalidEmailForm } from './stories/InvalidEmailForm';
 import { ShortPasswordForm } from './stories/ShortPasswordForm';
 import { ValidForm } from './stories/ValidForm';

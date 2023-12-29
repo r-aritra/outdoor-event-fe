@@ -2,7 +2,7 @@ import { expect } from '@storybook/jest';
 import { StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 
-import Login from '../Login';
+import Login from '../components/pages/Login';
 
 type Story = StoryObj<typeof Login>;
 

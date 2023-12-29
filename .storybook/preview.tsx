@@ -4,6 +4,7 @@ import '@mantine/notifications/styles.css';
 
 import type { Preview } from '@storybook/react'
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom';
 
 
 const preview: Preview = {
@@ -19,7 +20,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <MantineProvider>
-        <Story />
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
       </MantineProvider>
     ),
   ],

@@ -17,12 +17,13 @@ export const FilledForm: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.type(canvas.getByTestId('email-input'), 'email@provider.com');
+    const loginButton = canvas.getByTestId('button-login');
+    expect(loginButton).toBeDisabled();
 
-    await userEvent.type(canvas.getByTestId('password-input'), 'a-random-password');
+    await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com');
 
-    await userEvent.click(canvas.getByTestId('button-input'));
+    await userEvent.type(canvas.getByTestId('password-input'), 'rutvik12321');
 
-    await expect(canvas.getByText('Welcome to booking.com')).toBeInTheDocument();
+    expect(loginButton).toBeEnabled();
   },
 };

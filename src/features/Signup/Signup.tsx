@@ -72,6 +72,7 @@ export default function Signup() {
           <Stack>
             <TextInput
               label="Name"
+              data-testid="name-input"
               placeholder="Your name"
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
@@ -81,6 +82,7 @@ export default function Signup() {
             <TextInput
               required
               label="Email"
+              data-testid="email-input"
               placeholder="hello@mantine.dev"
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
@@ -91,6 +93,7 @@ export default function Signup() {
             <PasswordInput
               required
               label="Password"
+              data-testid="password-input"
               placeholder="Your password"
               value={form.values.password}
               onChange={(event) =>
@@ -115,6 +118,7 @@ export default function Signup() {
                 required
                 label="Enter OTP"
                 placeholder="123456"
+                data-testid="OTP-input"
                 value={form.values.otp}
                 onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
                 error={form.errors.otp && 'Invalid OTP'}
@@ -123,7 +127,7 @@ export default function Signup() {
             )}
           </Stack>
 
-          <Group justify="space-between" mt="xl">
+          <Group justify="space-between" mt="xl" data-testid="button-input">
             <Anchor
               component="button"
               type="button"
@@ -135,11 +139,22 @@ export default function Signup() {
             </Anchor>
 
             {showOtpInput ? (
-              <Button type="button" onClick={handleOtpSubmit} radius="xl">
+              <Button
+                type="button"
+                onClick={handleOtpSubmit}
+                radius="xl"
+                data-testid="button-validation"
+                disabled={!form.isValid()}
+              >
                 {'Validate OTP'}
               </Button>
             ) : (
-              <Button type="submit" radius="xl">
+              <Button
+                type="submit"
+                radius="xl"
+                data-testid="button-signup"
+                disabled={!form.isValid()}
+              >
                 {'Register'}
               </Button>
             )}

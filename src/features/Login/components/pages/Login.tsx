@@ -94,12 +94,7 @@ export default function Login() {
             >
               {"Don't have an account? Register"}{' '}
             </Anchor>
-            <Button
-              type="submit"
-              radius="xl"
-              disabled={!form.isValid()}
-              data-testid="button-login"
-            >
+            <Button type="submit" radius="xl" data-testid="button-login">
               {'Login'}
             </Button>
           </Group>

@@ -11,7 +11,6 @@ export const InvalidEmailForm: Story = {
     const canvas = within(canvasElement);
 
     const loginButton = canvas.getByTestId('button-login');
-    expect(loginButton).toBeDisabled();
 
     // Test Case: Invalid email
     await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail', {
@@ -21,6 +20,10 @@ export const InvalidEmailForm: Story = {
       delay: 50,
     });
 
-    expect(loginButton).toBeDisabled();
+    await userEvent.click(loginButton, {
+      delay: 50,
+    });
+
+    expect(canvas.getByText('Invalid email')).toBeInTheDocument();
   },
 };

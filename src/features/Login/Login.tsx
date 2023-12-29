@@ -13,11 +13,11 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [visible, setVisible] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       email: '',
@@ -37,7 +37,7 @@ export default function Login() {
     setVisible(true);
     const data = form.values;
     console.log(data);
-    navigate('/');
+    // navigate('/');
     setVisible(false);
   };
 
@@ -59,6 +59,7 @@ export default function Login() {
           <Stack>
             <TextInput
               required
+              data-testid="email-input"
               label="Email"
               placeholder="hello@mantine.dev"
               value={form.values.email}
@@ -69,6 +70,7 @@ export default function Login() {
 
             <PasswordInput
               required
+              data-testid="password-input"
               label="Password"
               placeholder="Your password"
               value={form.values.password}
@@ -82,13 +84,13 @@ export default function Login() {
             />
           </Stack>
 
-          <Group justify="space-between" mt="xl">
+          <Group justify="space-between" mt="xl" data-testid="button-input">
             <Anchor
               component="button"
               type="button"
               c="dimmed"
               size="xs"
-              onClick={() => navigate('/signup')}
+              // onClick={() => navigate('/signup')}
             >
               {"Don't have an account? Register"}{' '}
             </Anchor>

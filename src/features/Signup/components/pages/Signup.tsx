@@ -40,8 +40,6 @@ export default function Signup() {
     setVisible(true);
     const data = form.values;
     console.log(data);
-    // Add logic for OTP verification here
-    // For demonstration purposes, let's assume OTP verification is successful
     setShowOtpInput(true);
     setVisible(false);
   };
@@ -49,8 +47,6 @@ export default function Signup() {
   const handleOtpSubmit = () => {
     const data = form.values;
     console.log(data);
-    // Add logic for OTP validation here
-    // For demonstration purposes, let's assume OTP validation is successful
     navigate('/');
   };
 
@@ -107,7 +103,7 @@ export default function Signup() {
 
             <Checkbox
               label="Register as a vendor"
-              // checked={form.values.terms}
+              checked={form.values.terms}
               onChange={(event) =>
                 form.setFieldValue('terms', event.currentTarget.checked)
               }

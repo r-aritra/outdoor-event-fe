@@ -12,7 +12,6 @@ export const ShortPasswordForm: Story = {
 
     const loginButton = canvas.getByTestId('button-login');
 
-    // Test Case: Short password
     await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
       delay: 50,
     });

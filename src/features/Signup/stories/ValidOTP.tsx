@@ -12,7 +12,6 @@ export const ValidOTP: Story = {
 
     const signupButton = canvas.getByTestId('button-signup');
 
-    // Test Case: Valid email and password
     await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
       delay: 50,
     });

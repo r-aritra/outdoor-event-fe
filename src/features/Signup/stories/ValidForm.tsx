@@ -11,7 +11,6 @@ export const ValidForm: Story = {
 
     const signupButton = canvas.getByTestId('button-signup');
 
-    // Test Case: Valid email and password
     await userEvent.type(canvas.getByTestId('name-input'), 'rutvik', {
       delay: 100,
     });

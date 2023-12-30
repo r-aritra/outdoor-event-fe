@@ -9,7 +9,6 @@ export const ValidForm: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Test Case: Valid email and password
     await userEvent.type(canvas.getByTestId('email-input'), 'rutvik@gmail.com', {
       delay: 50,
     });

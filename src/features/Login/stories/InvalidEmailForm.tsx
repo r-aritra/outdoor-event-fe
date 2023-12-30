@@ -12,7 +12,6 @@ export const InvalidEmailForm: Story = {
 
     const loginButton = canvas.getByTestId('button-login');
 
-    // Test Case: Invalid email
     await userEvent.type(canvas.getByTestId('email-input'), 'invalidemail', {
       delay: 50,
     });

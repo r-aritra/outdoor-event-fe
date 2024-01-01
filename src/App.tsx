@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/dropzone/styles.css';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoutes from './router/AppRoutes';

@@ -1,17 +1,16 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import '@mantine/core/styles.css';
 
-import Home from './pages/Home';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import AppRoutes from './router/AppRoutes';
+import { MantineProvider } from '@mantine/core';
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <MantineProvider>
+        <AppRoutes />
+      </MantineProvider>
     </QueryClientProvider>
   );
 }

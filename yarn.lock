@@ -1977,6 +1977,13 @@
     react-textarea-autosize "8.5.3"
     type-fest "^3.13.1"
 
+"@mantine/dates@^7.3.2":
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/@mantine/dates/-/dates-7.3.2.tgz#a1d4131aad2a82b7b41b7f87242ec459ed3a2ac3"
+  integrity sha512-mmP0PYpM9GYTXRhEL4Ulb+170vgW8fpGwRdVNuCCE/cyzIKHPJzaI2pEGR/i+sboH+RC1InCy/JaiDkPY6Fzlg==
+  dependencies:
+    clsx "2.0.0"
+
 "@mantine/dropzone@^7.3.2":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@mantine/dropzone/-/dropzone-7.3.2.tgz#358d99089318e62bc520040a55708a31b0ab7259"

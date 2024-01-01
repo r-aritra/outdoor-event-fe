@@ -3,6 +3,9 @@ import { Group, Text, rem, Button } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
 import * as XLSX from 'xlsx';
+import { DateInput } from '@mantine/dates';
+import { IconCalendarEvent } from '@tabler/icons-react';
+import { Notification } from '@mantine/core';
 
 export default function BatchEventRegister(props: Partial<DropzoneProps>) {
   const openRef = useRef<() => void>(null);
@@ -36,8 +39,22 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
 
   return (
     <>
-      {/* "Select files" button outside Dropzone */}
-      <Group justify="center" mt="md">
+      <Text size="xl" fw={700}>
+        Extra large text
+      </Text>
+
+      <Notification title="We notify you that">
+        You are now obligated to give a star to Mantine project on GitHub
+      </Notification>
+
+      <Group mt="md" mb="20px" style={{ justifyContent: 'space-between' }}>
+        <DateInput
+          miw={144}
+          maw={400}
+          placeholder="Input placeholder"
+          rightSectionWidth={40}
+          rightSection={<IconCalendarEvent />}
+        />
         <Button onClick={() => openRef.current?.()}>Select files</Button>
       </Group>
 

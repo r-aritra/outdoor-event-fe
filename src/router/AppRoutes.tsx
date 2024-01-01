@@ -1,40 +1,22 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-} from 'react-router-dom';
-
-import BatchEventApprove from '../features/BatchEventApprove/BatchEventApprove';
-import BatchEventRegister from '../features/BatchEventRegister/BatchEventRegister';
-import BatchEventResults from '../features/BatchEventResults/BatchEventResults';
-import Home from '../features/Home/Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../features/Login/Login';
 import Signup from '../features/Signup/Signup';
+import AppLayout from '../layout/AppLayout';
 
-const isAuthenticated = false;
-
-const PrivateRoutes = () => {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-};
+const isAuthenticated = true;
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        <Route element={<PrivateRoutes />}>
-          <Route path="/batch-event/results" element={<BatchEventApprove />} />
-          <Route path="/batch-event/register" element={<BatchEventRegister />} />
-          <Route path="/batch-event/approve" element={<BatchEventResults />} />
-        </Route>
-
-        <Route path="/" element={<Home />} />
-      </Routes>
+      {isAuthenticated ? (
+        <AppLayout />
+      ) : (
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      )}
     </Router>
   );
 };

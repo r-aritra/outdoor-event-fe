@@ -16,19 +16,20 @@ function AppLayout() {
 
   return (
     <AppShell
-      header={{ height: 60 }}
+      header={{ height: 70 }}
       navbar={{
-        width: 300,
+        width: { sm: 200, lg: 300 },
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
       padding="md"
+      layout="alt"
     >
       <AppShell.Header>
         <AppHeader opened={opened} onBurgerClick={toggle} />
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar zIndex={300}>
         <AppNavbar />
       </AppShell.Navbar>
 

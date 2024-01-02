@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Group, Text, rem, Button } from '@mantine/core';
+import { Group, Text, rem, Button, Box } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
 import * as XLSX from 'xlsx';
@@ -39,76 +39,78 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
 
   return (
     <>
-      <Text size="xl" fw={700}>
-        Extra large text
-      </Text>
+      <Box>
+        <Text size="xl" fw={700}>
+          Extra large text
+        </Text>
 
-      <Notification title="We notify you that">
-        You are now obligated to give a star to Mantine project on GitHub
-      </Notification>
+        <Notification title="We notify you that">
+          You are now obligated to give a star to Mantine project on GitHub
+        </Notification>
 
-      <Group mt="md" mb="20px" style={{ justifyContent: 'space-between' }}>
-        <DateInput
-          miw={144}
-          maw={400}
-          placeholder="Input placeholder"
-          rightSectionWidth={40}
-          rightSection={<IconCalendarEvent />}
-        />
-        <Button onClick={() => openRef.current?.()}>Select files</Button>
-      </Group>
-
-      {/* Dropzone component */}
-      <Dropzone
-        onDrop={handleDrop}
-        onReject={(rejectedFiles) => console.log('rejected files', rejectedFiles)}
-        maxSize={5 * 1024 ** 2}
-        accept={MS_EXCEL_MIME_TYPE}
-        openRef={openRef}
-        {...props}
-      >
-        <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
-          <Dropzone.Accept>
-            <IconUpload
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: 'var(--mantine-color-blue-6)',
-              }}
-              stroke={1.5}
-            />
-          </Dropzone.Accept>
-          <Dropzone.Reject>
-            <IconX
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: 'var(--mantine-color-red-6)',
-              }}
-              stroke={1.5}
-            />
-          </Dropzone.Reject>
-          <Dropzone.Idle>
-            <IconPhoto
-              style={{
-                width: rem(52),
-                height: rem(52),
-                color: 'var(--mantine-color-dimmed)',
-              }}
-              stroke={1.5}
-            />
-          </Dropzone.Idle>
-
-          <div>
-            <Text size="xl" inline>
-              Drag images here or click to select files
-            </Text>
-            <Text size="sm" c="dimmed" inline mt={7}>
-              Attach as many files as you like, each file should not exceed 5mb
-            </Text>
-          </div>
+        <Group mt="md" mb="20px" style={{ justifyContent: 'space-between' }}>
+          <DateInput
+            miw={144}
+            maw={400}
+            placeholder="Input placeholder"
+            rightSectionWidth={40}
+            rightSection={<IconCalendarEvent />}
+          />
+          <Button onClick={() => openRef.current?.()}>Select files</Button>
         </Group>
-      </Dropzone>
+
+        {/* Dropzone component */}
+        <Dropzone
+          onDrop={handleDrop}
+          onReject={(rejectedFiles) => console.log('rejected files', rejectedFiles)}
+          maxSize={5 * 1024 ** 2}
+          accept={MS_EXCEL_MIME_TYPE}
+          openRef={openRef}
+          {...props}
+        >
+          <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
+            <Dropzone.Accept>
+              <IconUpload
+                style={{
+                  width: rem(52),
+                  height: rem(52),
+                  color: 'var(--mantine-color-blue-6)',
+                }}
+                stroke={1.5}
+              />
+            </Dropzone.Accept>
+            <Dropzone.Reject>
+              <IconX
+                style={{
+                  width: rem(52),
+                  height: rem(52),
+                  color: 'var(--mantine-color-red-6)',
+                }}
+                stroke={1.5}
+              />
+            </Dropzone.Reject>
+            <Dropzone.Idle>
+              <IconPhoto
+                style={{
+                  width: rem(52),
+                  height: rem(52),
+                  color: 'var(--mantine-color-dimmed)',
+                }}
+                stroke={1.5}
+              />
+            </Dropzone.Idle>
+
+            <div>
+              <Text size="xl" inline>
+                Drag images here or click to select files
+              </Text>
+              <Text size="sm" c="dimmed" inline mt={7}>
+                Attach as many files as you like, each file should not exceed 5mb
+              </Text>
+            </div>
+          </Group>
+        </Dropzone>
+      </Box>
     </>
   );
 }

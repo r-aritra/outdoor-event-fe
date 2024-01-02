@@ -1,4 +1,3 @@
-// AppLayout.tsx
 import React from 'react';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -12,16 +11,20 @@ import BatchEventResults from '../features/BatchEventResults/BatchEventResults';
 import Home from '../features/Home/Home';
 
 function AppLayout() {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure(true);
 
   return (
     <AppShell
       header={{ height: 70 }}
-      navbar={{
-        width: { sm: 200, lg: 300 },
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened },
-      }}
+      navbar={
+        opened
+          ? {
+              width: { sm: 200, lg: 300 },
+              breakpoint: 'sm',
+              //   collapsed: { mobile: false },
+            }
+          : undefined
+      }
       padding="md"
       layout="alt"
     >
@@ -29,9 +32,11 @@ function AppLayout() {
         <AppHeader opened={opened} onBurgerClick={toggle} />
       </AppShell.Header>
 
-      <AppShell.Navbar zIndex={300}>
-        <AppNavbar />
-      </AppShell.Navbar>
+      {opened ? (
+        <AppShell.Navbar zIndex={300}>
+          <AppNavbar opened={opened} onBurgerClick={toggle} />
+        </AppShell.Navbar>
+      ) : null}
 
       <AppShell.Main>
         <Routes>

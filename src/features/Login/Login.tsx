@@ -14,6 +14,7 @@ import {
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../models/api';
 
 export default function Login() {
   const [visible, setVisible] = useState(false);
@@ -21,9 +22,7 @@ export default function Login() {
   const form = useForm({
     initialValues: {
       email: '',
-      name: '',
       password: '',
-      terms: true,
     },
 
     validate: {
@@ -33,11 +32,26 @@ export default function Login() {
     },
   });
 
+  const loginMutation = useLogin();
+
   const handleSubmit = async () => {
     setVisible(true);
     const data = form.values;
     console.log(data);
-    navigate('/');
+
+    try {
+      await loginMutation.mutate({
+        data: { ...data, device_id: '1234321', device_type: 'web' },
+      });
+
+      if (loginMutation.isSuccess) {
+        console.log('Login successful:', loginMutation);
+      }
+    } catch (error) {
+      console.error('Login error:', loginMutation);
+    }
+
+    // navigate('/');
     setVisible(false);
   };
 

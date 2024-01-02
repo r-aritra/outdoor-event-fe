@@ -1,11 +1,9 @@
 import {
   Anchor,
   Button,
-  Checkbox,
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
@@ -15,9 +13,11 @@ import {
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRegisterUser, useSendOTP, useValidateOTP } from '../../models/api';
+import { notifications } from '@mantine/notifications';
+import { HttpStatusCode } from 'axios';
 
 export default function Signup() {
-  const [visible, setVisible] = useState(false);
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
@@ -25,7 +25,6 @@ export default function Signup() {
       email: '',
       name: '',
       password: '',
-      terms: true,
       otp: '',
     },
 
@@ -36,31 +35,83 @@ export default function Signup() {
     },
   });
 
-  const handleSubmit = async () => {
-    setVisible(true);
-    const data = form.values;
-    console.log(data);
-    // Add logic for OTP verification here
-    // For demonstration purposes, let's assume OTP verification is successful
-    setShowOtpInput(true);
-    setVisible(false);
+  const showNotification = (title: string, message: string) => {
+    notifications.show({
+      title: title,
+      message: message,
+    });
   };
 
-  const handleOtpSubmit = () => {
+  const signInMutation = useRegisterUser();
+  const sendOTPMutation = useSendOTP();
+  const validateOTPMutation = useValidateOTP();
+
+  const handleSubmit = async () => {
     const data = form.values;
     console.log(data);
-    // Add logic for OTP validation here
-    // For demonstration purposes, let's assume OTP validation is successful
-    navigate('/');
+
+    signInMutation.mutate(
+      {
+        data: { name: data.name, email: data.email, password: data.password },
+      },
+      {
+        onSuccess: (signInData) => {
+          console.log('Sign In successful:', signInData);
+          sendOTPMutation.mutate(
+            {
+              data: { email: data.email, device_id: '1234321' },
+            },
+            {
+              onSuccess: (sendOTPData) => {
+                console.log('Send OTP successful:', sendOTPData);
+                showNotification('Successful', 'OTP has been send to your email ');
+                setShowOtpInput(true);
+              },
+              onError: (sendOTPError) => {
+                showNotification('Send OTP error:', sendOTPError.message);
+              },
+            },
+          );
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Conflict)
+              showNotification('User exist', 'User already exist try another one');
+            else showNotification('Network or other error:', error.message);
+          }
+        },
+      },
+    );
+  };
+
+  const handleOtpSubmit = async () => {
+    const data = form.values;
+    console.log(data);
+
+    validateOTPMutation.mutate(
+      {
+        data: { email: data.email, otp: data.otp, device_id: '1234321' },
+      },
+      {
+        onSuccess: (validateOTPData) => {
+          console.log('Validate OTP successful:', validateOTPData);
+          navigate('/login', { state: { email: data.email } });
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Unauthorized)
+              showNotification('Opp..', 'OTP is not valid');
+            else if (error.response.status === 410)
+              showNotification('Opp..', 'OTP has been expired..');
+            else showNotification('Network or other error:', error.message);
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
           Welcome to booking.com
@@ -100,14 +151,6 @@ export default function Signup() {
                 form.errors.password && 'Password should include at least 6 characters'
               }
               radius="md"
-            />
-
-            <Checkbox
-              label="Register as a vendor"
-              // checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue('terms', event.currentTarget.checked)
-              }
             />
 
             {showOtpInput && (

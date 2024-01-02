@@ -4,7 +4,6 @@ import {
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
@@ -12,16 +11,18 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../models/api';
+import { HttpStatusCode } from 'axios';
+import { notifications } from '@mantine/notifications';
 
 export default function Login() {
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
   const form = useForm({
     initialValues: {
-      email: '',
+      email: state ? state.email : '',
       password: '',
     },
 
@@ -32,36 +33,41 @@ export default function Login() {
     },
   });
 
+  const showNotification = (title: string, message: string) => {
+    notifications.show({
+      title: title,
+      message: message,
+    });
+  };
+
   const loginMutation = useLogin();
 
   const handleSubmit = async () => {
-    setVisible(true);
     const data = form.values;
     console.log(data);
 
-    try {
-      await loginMutation.mutate({
+    loginMutation.mutate(
+      {
         data: { ...data, device_id: '1234321', device_type: 'web' },
-      });
-
-      if (loginMutation.isSuccess) {
-        console.log('Login successful:', loginMutation);
-      }
-    } catch (error) {
-      console.error('Login error:', loginMutation);
-    }
-
-    // navigate('/');
-    setVisible(false);
+      },
+      {
+        onSuccess: (responseData) => {
+          console.log('Login successful:', responseData);
+          navigate('/');
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.NotFound)
+              showNotification('User Not Found', 'Enter valid data ......');
+            else showNotification('Network or other error:', error.message);
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
           Welcome to booking.com

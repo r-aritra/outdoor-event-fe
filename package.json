@@ -1,6 +1,7 @@
 {
   "name": "outdoor-event-fe",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "tsc & vite",
     "postinstall": "husky install",
@@ -22,14 +23,11 @@
     "@mantine/core": "^7.3.2",
     "@mantine/form": "^7.3.2",
     "@mantine/hooks": "^7.3.2",
-    "@mantine/modals": "^7.3.2",
     "@mantine/notifications": "^7.3.2",
-    "@mantine/styles": "^6.0.21",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.11",
     "axios": "^1.6.2",
-    "cli-table3": "^0.6.3",
     "dayjs": "^1.11.10",
     "eslint-plugin-storybook": "^0.6.15",
     "i18next": "^23.7.13",

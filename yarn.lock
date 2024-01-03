@@ -1997,11 +1997,6 @@
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.4.0.tgz#d7e0bc38f6c6b890326607b0d0654ef68e194b0b"
   integrity sha512-Swv23D8XmZqE2hohPBcff+ITwv5l8UlwiiEGMhL+ceUvJLnPzdwlW21qnLBtRtZWyQQ59TAav4M0GFGd93JS8Q==
 
-"@mantine/modals@^7.3.2":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@mantine/modals/-/modals-7.4.0.tgz#097a92f26e2921c3b6ff8d334ef3759a0089f505"
-  integrity sha512-uXZuN5vCx0Wdu0gOmoDaGD8/GVpx7qCeyAAFCH94WPHl/aK3fzKSk4K63deWY5Ml9a5ktic/i5pYil3MUBEj5w==
-
 "@mantine/notifications@^7.3.2":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@mantine/notifications/-/notifications-7.4.0.tgz#0ce605ade39aaaed626dc62850751fa672e0009e"
@@ -2014,14 +2009,6 @@
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@mantine/store/-/store-7.4.0.tgz#70e28c53fd3474d787c3613d7f9322991b182a71"
   integrity sha512-sSaBj6qVU0e5ml70/8e3A9pwAMBL5yKWNdnhw20b+74j85+FUDhDy8bEGZfyS0BtYPGVoxj5yF8/uZhxnDXpbg==
-
-"@mantine/styles@^6.0.21":
-  version "6.0.21"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-6.0.21.tgz#8ea097fc76cbb3ed55f5cfd719d2f910aff5031b"
-  integrity sha512-PVtL7XHUiD/B5/kZ/QvZOZZQQOj12QcRs3Q6nPoqaoPcOX5+S7bMZLMH0iLtcGq5OODYk0uxlvuJkOZGoPj8Mg==
-  dependencies:
-    clsx "1.1.1"
-    csstype "3.0.9"
 
 "@mdx-js/react@^2.1.5":
   version "2.3.0"
@@ -5013,7 +5000,7 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.2.tgz#1773a8f4b9c4d6ac31563df53b3fc1d79462fe41"
   integrity sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==
 
-cli-table3@^0.6.1, cli-table3@^0.6.3:
+cli-table3@^0.6.1:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/cli-table3/-/cli-table3-0.6.3.tgz#61ab765aac156b52f222954ffc607a6f01dbeeb2"
   integrity sha512-w5Jac5SykAeZJKntOxJCrm63Eg5/4dhMWIcuTbo9rpE+brgaSZo0RuNJZeOyMgsUdhDeojvgyQLmjI+K50ZGyg==
@@ -5057,11 +5044,6 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
-
-clsx@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
-  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 clsx@2.0.0:
   version "2.0.0"
@@ -5308,11 +5290,6 @@ cssstyle@^2.3.0:
   integrity sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
   dependencies:
     cssom "~0.3.6"
-
-csstype@3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.9.tgz#6410af31b26bd0520933d02cbc64fce9ce3fbf0b"
-  integrity sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==
 
 csstype@^3.0.2:
   version "3.1.3"

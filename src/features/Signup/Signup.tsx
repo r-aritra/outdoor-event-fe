@@ -10,12 +10,13 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterUser, useSendOTP, useValidateOTP } from '../../models/api';
 import { notifications } from '@mantine/notifications';
 import { HttpStatusCode } from 'axios';
+import { SignupValidation } from './SignupValidation';
 
 export default function Signup() {
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -28,11 +29,15 @@ export default function Signup() {
       otp: '',
     },
 
-    validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
-    },
+    validate: zodResolver(SignupValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
+
+    // {
+    //   email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+    //   password: (val: string) =>
+    //     val.length <= 6 ? 'Password should include at least 6 characters' : null,
+    // },
   });
 
   const showNotification = (title: string, message: string) => {
@@ -117,10 +122,12 @@ export default function Signup() {
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
             <TextInput
+              required
               label="Name"
               placeholder="Your name"
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+              error={form.errors.name && 'Enter your name'}
               radius="md"
             />
 

@@ -10,11 +10,12 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../models/api';
 import { HttpStatusCode } from 'axios';
 import { notifications } from '@mantine/notifications';
+import { LoginValidation } from './LoginValidation';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,12 +26,9 @@ export default function Login() {
       email: state ? state.email : '',
       password: '',
     },
-
-    validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
-    },
+    validate: zodResolver(LoginValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
   });
 
   const showNotification = (title: string, message: string) => {

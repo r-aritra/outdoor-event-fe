@@ -46,9 +46,8 @@ export default function Signup() {
   const sendOTPMutation = useSendOTP();
   const validateOTPMutation = useValidateOTP();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
 
     signInMutation.mutate(
       {
@@ -56,14 +55,12 @@ export default function Signup() {
       },
       {
         onSuccess: (signInData) => {
-          console.log('Sign In successful:', signInData);
           sendOTPMutation.mutate(
             {
               data: { email: data.email, device_id: '1234321' },
             },
             {
               onSuccess: (sendOTPData) => {
-                console.log('Send OTP successful:', sendOTPData);
                 showNotification('Successful', 'OTP has been send to your email ');
                 setShowOtpInput(true);
               },
@@ -84,9 +81,8 @@ export default function Signup() {
     );
   };
 
-  const handleOtpSubmit = async () => {
+  const handleOtpSubmit = () => {
     const data = form.values;
-    console.log(data);
 
     validateOTPMutation.mutate(
       {
@@ -94,7 +90,6 @@ export default function Signup() {
       },
       {
         onSuccess: (validateOTPData) => {
-          console.log('Validate OTP successful:', validateOTPData);
           navigate('/login', { state: { email: data.email } });
         },
         onError: (error) => {

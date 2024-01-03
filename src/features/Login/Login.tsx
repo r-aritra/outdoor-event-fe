@@ -42,9 +42,8 @@ export default function Login() {
 
   const loginMutation = useLogin();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
 
     loginMutation.mutate(
       {
@@ -52,7 +51,6 @@ export default function Login() {
       },
       {
         onSuccess: (responseData) => {
-          console.log('Login successful:', responseData);
           navigate('/');
         },
         onError: (error) => {

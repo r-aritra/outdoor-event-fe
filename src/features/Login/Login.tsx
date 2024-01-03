@@ -14,8 +14,8 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../models/api';
 import { HttpStatusCode } from 'axios';
-import { notifications } from '@mantine/notifications';
 import { LoginValidation } from './LoginValidation';
+import showNotification from '../../utils/appNotification';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,13 +30,6 @@ export default function Login() {
     validateInputOnChange: true,
     validateInputOnBlur: true,
   });
-
-  const showNotification = (title: string, message: string) => {
-    notifications.show({
-      title: title,
-      message: message,
-    });
-  };
 
   const loginMutation = useLogin();
 
@@ -56,8 +49,17 @@ export default function Login() {
         onError: (error) => {
           if (error.response) {
             if (error.response.status === HttpStatusCode.NotFound)
-              showNotification('User Not Found', 'Enter valid data ......');
-            else showNotification('Network or other error:', error.message);
+              showNotification({
+                type: 'error',
+                title: 'User Not Found',
+                message: 'Enter valid data ......',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
           }
         },
       },

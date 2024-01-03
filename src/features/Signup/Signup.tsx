@@ -14,9 +14,9 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterUser, useSendOTP, useValidateOTP } from '../../models/api';
-import { notifications } from '@mantine/notifications';
 import { HttpStatusCode } from 'axios';
 import { SignupValidation } from './SignupValidation';
+import showNotification from '../../utils/appNotification';
 
 export default function Signup() {
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -32,20 +32,7 @@ export default function Signup() {
     validate: zodResolver(SignupValidation()),
     validateInputOnChange: true,
     validateInputOnBlur: true,
-
-    // {
-    //   email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-    //   password: (val: string) =>
-    //     val.length <= 6 ? 'Password should include at least 6 characters' : null,
-    // },
   });
-
-  const showNotification = (title: string, message: string) => {
-    notifications.show({
-      title: title,
-      message: message,
-    });
-  };
 
   const signInMutation = useRegisterUser();
   const sendOTPMutation = useSendOTP();
@@ -59,18 +46,26 @@ export default function Signup() {
         data: { name: data.name, email: data.email, password: data.password },
       },
       {
-        onSuccess: (signInData) => {
+        onSuccess: () => {
           sendOTPMutation.mutate(
             {
               data: { email: data.email, device_id: '1234321' },
             },
             {
-              onSuccess: (sendOTPData) => {
-                showNotification('Successful', 'OTP has been send to your email ');
+              onSuccess: () => {
+                showNotification({
+                  type: 'success',
+                  title: 'Successful',
+                  message: 'OTP has been send to your email',
+                });
                 setShowOtpInput(true);
               },
               onError: (sendOTPError) => {
-                showNotification('Send OTP error:', sendOTPError.message);
+                showNotification({
+                  type: 'error',
+                  title: 'Send OTP error:',
+                  message: sendOTPError.message,
+                });
               },
             },
           );
@@ -78,8 +73,17 @@ export default function Signup() {
         onError: (error) => {
           if (error.response) {
             if (error.response.status === HttpStatusCode.Conflict)
-              showNotification('User exist', 'User already exist try another one');
-            else showNotification('Network or other error:', error.message);
+              showNotification({
+                type: 'error',
+                title: 'User exist',
+                message: 'User already exist try another one',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
           }
         },
       },
@@ -94,16 +98,29 @@ export default function Signup() {
         data: { email: data.email, otp: data.otp, device_id: '1234321' },
       },
       {
-        onSuccess: (validateOTPData) => {
+        onSuccess: () => {
           navigate('/login', { state: { email: data.email } });
         },
         onError: (error) => {
           if (error.response) {
             if (error.response.status === HttpStatusCode.Unauthorized)
-              showNotification('Opp..', 'OTP is not valid');
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP is not valid',
+              });
             else if (error.response.status === 410)
-              showNotification('Opp..', 'OTP has been expired..');
-            else showNotification('Network or other error:', error.message);
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP has been expired..',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
           }
         },
       },

@@ -51,6 +51,8 @@ export default function Login() {
       },
       {
         onSuccess: (responseData) => {
+          localStorage.setItem('accessToken', responseData.data.access_token);
+          localStorage.setItem('refreshToken', responseData.data.refresh_token);
           navigate('/');
         },
         onError: (error) => {

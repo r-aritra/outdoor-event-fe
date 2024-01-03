@@ -14,7 +14,7 @@ import Home from '../features/Home/Home';
 import Login from '../features/Login/Login';
 import Signup from '../features/Signup/Signup';
 
-const isAuthenticated = false;
+const isAuthenticated = localStorage.getItem('accessToken');
 
 const PrivateRoutes = () => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;

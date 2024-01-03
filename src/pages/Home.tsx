@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRegisterUser } from '../models/api';
+import { t } from 'i18next';
 
 const Home: React.FC = () => {
   useEffect(() => {
@@ -18,13 +19,13 @@ const Home: React.FC = () => {
           password: '123222123',
         },
       });
-      console.log(result); // Process the result as needed
+      console.log(result);
     } catch (error) {
-      console.error(error); // Handle errors
+      console.error(error);
     }
   };
 
-  return <h1>hellow</h1>;
+  return <h1>{t('home')}</h1>;
 };
 
 export default Home;

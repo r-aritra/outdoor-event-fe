@@ -24,6 +24,7 @@ import type {
 import { axiosCustomInstance } from '../lib/axiosCustomInstance';
 import type { ErrorType } from '../lib/axiosCustomInstance';
 
+// eslint-disable-next-line
 type SecondParameter<T extends (...args: any) => any> = T extends (
   config: any,
   args: infer P,

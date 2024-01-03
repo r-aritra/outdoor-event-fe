@@ -33,9 +33,9 @@ function Signup() {
     },
     validate: {
       email: (val: string) =>
-        /^\S+@\S+$/.test(val) ? null : t('page.signup.invalidEmailError'),
+        /^\S+@\S+$/.test(val) ? null : t('signup.invalidEmailError'),
       password: (val: string) =>
-        val.length <= 6 ? t('page.signup.invalidPasswordError') : null,
+        val.length <= 6 ? t('signup.invalidPasswordError') : null,
     },
   });
 
@@ -62,7 +62,7 @@ function Signup() {
       />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          {t('page.signup.welcome')}
+          {t('signup.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -70,9 +70,9 @@ function Signup() {
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
             <TextInput
-              label={t('page.signup.nameLabel')}
+              label={t('signup.nameLabel')}
               data-testid="name-input"
-              placeholder={t('page.signup.namePlaceholder')}
+              placeholder={t('signup.namePlaceholder')}
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
               radius="md"
@@ -80,30 +80,30 @@ function Signup() {
 
             <TextInput
               required
-              label={t('page.signup.emailLabel')}
+              label={t('signup.emailLabel')}
               data-testid="email-input"
-              placeholder={t('page.signup.emailPlaceholder')}
+              placeholder={t('signup.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && t('page.signup.invalidEmailError')}
+              error={form.errors.email && t('signup.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label={t('page.signup.passwordLabel')}
+              label={t('signup.passwordLabel')}
               data-testid="password-input"
-              placeholder={t('page.signup.passwordPlaceholder')}
+              placeholder={t('signup.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={form.errors.password && t('page.signup.invalidPasswordError')}
+              error={form.errors.password && t('signup.invalidPasswordError')}
               radius="md"
             />
 
             <Checkbox
-              label={t('page.signup.vendorRegisterLabel')}
+              label={t('signup.vendorRegisterLabel')}
               checked={form.values.terms}
               onChange={(event) =>
                 form.setFieldValue('terms', event.currentTarget.checked)
@@ -113,12 +113,12 @@ function Signup() {
             {showOtpInput && (
               <TextInput
                 required
-                label={t('page.signup.otpLabel')}
-                placeholder={t('page.signup.otpPlaceholder')}
+                label={t('signup.otpLabel')}
+                placeholder={t('signup.otpPlaceholder')}
                 data-testid="OTP-input"
                 value={form.values.otp}
                 onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
-                error={form.errors.otp && t('page.signup.invalidOTPError')}
+                error={form.errors.otp && t('signup.invalidOTPError')}
                 radius="md"
               />
             )}
@@ -132,7 +132,7 @@ function Signup() {
               onClick={() => navigate('/login')}
               size="xs"
             >
-              {t('page.signup.loginPrompt')}
+              {t('signup.loginPrompt')}
             </Anchor>
 
             {showOtpInput ? (
@@ -142,11 +142,11 @@ function Signup() {
                 radius="xl"
                 data-testid="button-validation"
               >
-                {t('page.signup.validateOTPButton')}
+                {t('signup.validateOTPButton')}
               </Button>
             ) : (
               <Button type="submit" radius="xl" data-testid="button-signup">
-                {t('page.signup.registerButton')}
+                {t('signup.registerButton')}
               </Button>
             )}
           </Group>

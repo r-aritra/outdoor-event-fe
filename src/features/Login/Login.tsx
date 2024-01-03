@@ -30,9 +30,9 @@ function Login() {
     },
     validate: {
       email: (val: string) =>
-        /^\S+@\S+$/.test(val) ? null : t('page.login.invalidEmailError'),
+        /^\S+@\S+$/.test(val) ? null : t('login.invalidEmailError'),
       password: (val: string) =>
-        val.length <= 6 ? t('page.login.invalidPasswordError') : null,
+        val.length <= 6 ? t('login.invalidPasswordError') : null,
     },
   });
 
@@ -53,7 +53,7 @@ function Login() {
       />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          {t('page.login.welcome')}
+          {t('login.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -63,24 +63,24 @@ function Login() {
             <TextInput
               required
               data-testid="email-input"
-              label={t('page.login.emailLabel')}
-              placeholder={t('page.login.emailPlaceholder')}
+              label={t('login.emailLabel')}
+              placeholder={t('login.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && t('page.login.page.login.invalidEmailError')}
+              error={form.errors.email && t('login.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
               data-testid="password-input"
-              label={t('page.login.passwordLabel')}
-              placeholder={t('page.login.passwordPlaceholder')}
+              label={t('login.passwordLabel')}
+              placeholder={t('login.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={form.errors.password && t('page.login.invalidPasswordError')}
+              error={form.errors.password && t('login.invalidPasswordError')}
               radius="md"
             />
           </Stack>
@@ -93,10 +93,10 @@ function Login() {
               size="xs"
               onClick={() => navigate('/signup')}
             >
-              {t('page.login.registerPrompt')}
+              {t('login.registerPrompt')}
             </Anchor>
             <Button type="submit" radius="xl" data-testid="button-login">
-              {t('page.login.loginButton')}
+              {t('login.loginButton')}
             </Button>
           </Group>
         </form>

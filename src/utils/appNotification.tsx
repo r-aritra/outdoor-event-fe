@@ -1,11 +1,11 @@
 import { notifications } from '@mantine/notifications';
-import { IconCross, IconCircleCheck, IconInfoCircle } from '@tabler/icons-react';
+import { IconCrossOff, IconCircleCheck, IconInfoCircle } from '@tabler/icons-react';
 
 type ColorType = 'success' | 'error' | 'info';
 
 const IconMap = {
   success: <IconCircleCheck />,
-  error: <IconCross />,
+  error: <IconCrossOff />,
   info: <IconInfoCircle />,
 };
 

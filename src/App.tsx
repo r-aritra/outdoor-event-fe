@@ -7,7 +7,13 @@ import { Notifications } from '@mantine/notifications';
 import { Suspense } from 'react';
 import { AppLoading } from './layout/Loading';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 function App() {
   return (

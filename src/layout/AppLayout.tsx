@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Outlet } from 'react-router-dom';
 
-import AppHeader from './AppHeader';
-import AppNavbar from './AppNavbar';
+import AppHeader from './header/AppHeader';
+import AppNavbar from './Navbar/AppNavbar';
+import { AppLoading } from './Loading';
+import { Notifications } from '@mantine/notifications';
 
 function AppLayout() {
   const [opened, { toggle }] = useDisclosure(true);
@@ -17,25 +19,27 @@ function AppLayout() {
           ? {
               width: { sm: 200, lg: 300 },
               breakpoint: 'sm',
-              //   collapsed: { mobile: false },
+              collapsed: { mobile: !opened },
             }
           : undefined
       }
       padding="md"
-      layout="alt"
     >
       <AppShell.Header>
         <AppHeader opened={opened} onBurgerClick={toggle} />
       </AppShell.Header>
 
       {opened ? (
-        <AppShell.Navbar zIndex={300}>
-          <AppNavbar opened={opened} onBurgerClick={toggle} />
+        <AppShell.Navbar>
+          <AppNavbar />
         </AppShell.Navbar>
       ) : null}
 
       <AppShell.Main>
-        <Outlet />
+        <Suspense fallback={<AppLoading />}>
+          <Notifications />
+          <Outlet />
+        </Suspense>
       </AppShell.Main>
     </AppShell>
   );

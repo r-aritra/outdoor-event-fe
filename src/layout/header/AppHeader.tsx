@@ -19,9 +19,21 @@ const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Burger opened={opened} onClick={onBurgerClick} color={'#A6A7AB'} />
-        <Image src={'/src/layout/logo.png'} height={'40'} width={'200'} alt="logo" />
-        <Divider size="sm" orientation="vertical" style={{ margin: '10px' }} />
-        <Text fz="lg">batch event title </Text>
+        <Image
+          src={'/src/layout/header/jera.webp'}
+          height={'40'}
+          width={'200'}
+          alt="logo"
+          style={{ marginLeft: '10px' }}
+        />
+        <Divider
+          size="sm"
+          orientation="vertical"
+          style={{ marginLeft: '10px', marginRight: '10px' }}
+        />
+        <Text size="xl" fw={500}>
+          Batch Event Register Dashboard{' '}
+        </Text>
       </div>
 
       <div>

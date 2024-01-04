@@ -41,7 +41,7 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
     <>
       <Box>
         <Text size="xl" fw={700}>
-          Extra large text
+          Batch Evant Register
         </Text>
 
         <Notification title="We notify you that">

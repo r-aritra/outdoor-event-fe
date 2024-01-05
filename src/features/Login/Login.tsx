@@ -18,7 +18,7 @@ import { HttpStatusCode } from 'axios';
 import { LoginValidation } from './LoginValidation';
 import showNotification from '../../utils/appNotification';
 
-function Login() {
+const Login: React.FC = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -124,6 +124,6 @@ function Login() {
       </Paper>
     </Flex>
   );
-}
+};
 
 export default Login;

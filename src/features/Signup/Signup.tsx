@@ -19,7 +19,7 @@ import { HttpStatusCode } from 'axios';
 import { SignupValidation } from './SignupValidation';
 import showNotification from '../../utils/appNotification';
 
-function Signup() {
+const Signup: React.FC = () => {
   const { t } = useTranslation();
 
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -220,6 +220,6 @@ function Signup() {
       </Paper>
     </Flex>
   );
-}
+};
 
 export default Signup;

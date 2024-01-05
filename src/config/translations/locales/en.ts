@@ -43,4 +43,19 @@ export const en = {
     dragImagesHere: 'Drag images here or click to select files',
     attachFilesInfo: 'Attach as many files as you like, each file should not exceed 5mb',
   },
+  appNavbar: {
+    dashboard: 'Dashboard',
+    batchEvent: 'Batch Event',
+    batchEventRegister: 'Batch Event Register',
+    batchEventResults: 'Batch Event Results',
+    batchEventApprove: 'Batch Event Approve',
+    releases: 'Releases',
+    upcomingReleases: 'Upcoming Releases',
+    previousReleases: 'Previous Releases',
+    releasesSchedule: 'Releases Schedule',
+  },
+  appHeader: {
+    dashboard: 'Batch Event Register Dashboard',
+    userId: 'User ID',
+  },
 };

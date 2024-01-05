@@ -1,6 +1,7 @@
 // Header.tsx
 import React from 'react';
 import { Burger, Divider, Image, Text } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   opened: boolean;
@@ -8,6 +9,8 @@ interface HeaderProps {
 }
 
 const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       style={{
@@ -32,7 +35,7 @@ const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
           style={{ marginLeft: '10px', marginRight: '10px' }}
         />
         <Text size="xl" fw={500}>
-          Batch Event Register Dashboard{' '}
+          {t('appHeader.dashboard')}
         </Text>
       </div>
 
@@ -42,7 +45,7 @@ const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
             rutvik
           </Text>
         </div>
-        USerID : 304
+        {t('appHeader.userId')}: 304
       </div>
     </div>
   );

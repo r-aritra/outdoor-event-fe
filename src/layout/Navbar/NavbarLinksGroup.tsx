@@ -4,6 +4,7 @@ import { Group, Box, Collapse, ThemeIcon, UnstyledButton, rem } from '@mantine/c
 import { IconChevronRight } from '@tabler/icons-react';
 import classes from './NavbarLinksGroup.module.css';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface LinksGroupProps {
   icon: React.FC<any>;
@@ -21,9 +22,11 @@ export function LinksGroup({
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
 
+  const { t } = useTranslation();
+
   const items = (hasLinks ? links : []).map((link) => (
     <Link to={link.link} className={classes.link} key={link.label}>
-      {link.label}
+      {t(`appNavbar.${link.label}`)}
     </Link>
   ));
 
@@ -35,7 +38,7 @@ export function LinksGroup({
             <ThemeIcon variant="light" size={30}>
               <Icon style={{ width: rem(18), height: rem(18) }} />
             </ThemeIcon>
-            <Box ml="md">{label}</Box>
+            <Box ml="md">{t(`appNavbar.${label}`)}</Box>
           </Box>
           {hasLinks && (
             <IconChevronRight

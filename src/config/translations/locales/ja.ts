@@ -44,4 +44,19 @@ export const ja = {
     attachFilesInfo:
       '好きなだけファイルを添付できます。各ファイルのサイズは5MBを超えてはいけません',
   },
+  appNavbar: {
+    dashboard: 'ダッシュボード',
+    batchEvent: 'バッチイベント',
+    batchEventRegister: 'バッチイベント登録',
+    batchEventResults: 'バッチイベント結果',
+    batchEventApprove: 'バッチイベント承認',
+    releases: 'リリース',
+    upcomingReleases: '今後のリリース',
+    previousReleases: '前のリリース',
+    releasesSchedule: 'リリーススケジュール',
+  },
+  appHeader: {
+    dashboard: 'バッチイベント登録ダッシュボード',
+    userId: 'ユーザーID',
+  },
 };

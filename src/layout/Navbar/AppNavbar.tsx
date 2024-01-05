@@ -4,24 +4,24 @@ import { LinksGroup } from './NavbarLinksGroup';
 import classes from './NavbarNested.module.css';
 
 const mockdata = [
-  { label: 'Dashboard', icon: IconGauge },
+  { label: 'dashboard', icon: IconGauge },
   {
-    label: 'Batch Event',
+    label: 'batchEvent',
     icon: IconNotes,
     initiallyOpened: true,
     links: [
-      { label: 'Batch event register', link: '/batch-event/register' },
-      { label: 'Batch event results', link: '/batch-event/results' },
-      { label: 'Batch event approve', link: '/batch-event/approve' },
+      { label: 'batchEventRegister', link: '/batch-event/register' },
+      { label: 'batchEventResults', link: '/batch-event/results' },
+      { label: 'batchEventApprove', link: '/batch-event/approve' },
     ],
   },
   {
-    label: 'Releases',
+    label: 'releases',
     icon: IconCalendarStats,
     links: [
-      { label: 'Upcoming releases', link: '/' },
-      { label: 'Previous releases', link: '/' },
-      { label: 'Releases schedule', link: '/' },
+      { label: 'upcomingReleases', link: '/' },
+      { label: 'previousReleases', link: '/' },
+      { label: 'releasesSchedule', link: '/' },
     ],
   },
 ];

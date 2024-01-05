@@ -1,23 +1,27 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
-  Checkbox,
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { HttpStatusCode } from 'axios';
+import { useRegisterUser, useSendOTP, useValidateOTP } from '../../../../models/api';
+import showNotification from '../../../../utils/appNotification';
+import { SignupValidation } from '../../SignupValidation';
 
-export default function Signup() {
-  const [visible, setVisible] = useState(false);
+const Signup: React.FC = () => {
+  const { t } = useTranslation();
+
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
@@ -25,41 +29,112 @@ export default function Signup() {
       email: '',
       name: '',
       password: '',
-      terms: true,
       otp: '',
     },
 
-    validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
-    },
+    validate: zodResolver(SignupValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
   });
 
-  const handleSubmit = async () => {
-    setVisible(true);
+  const signInMutation = useRegisterUser();
+  const sendOTPMutation = useSendOTP();
+  const validateOTPMutation = useValidateOTP();
+
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
-    setShowOtpInput(true);
-    setVisible(false);
+
+    signInMutation.mutate(
+      {
+        data: { name: data.name, email: data.email, password: data.password },
+      },
+      {
+        onSuccess: () => {
+          sendOTPMutation.mutate(
+            {
+              data: { email: data.email, device_id: '1234321' },
+            },
+            {
+              onSuccess: () => {
+                showNotification({
+                  type: 'success',
+                  title: 'Successful',
+                  message: 'OTP has been send to your email',
+                });
+                setShowOtpInput(true);
+              },
+              onError: (sendOTPError) => {
+                showNotification({
+                  type: 'error',
+                  title: 'Send OTP error:',
+                  message: sendOTPError.message,
+                });
+              },
+            },
+          );
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Conflict)
+              showNotification({
+                type: 'error',
+                title: 'User exist',
+                message: 'User already exist try another one',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   const handleOtpSubmit = () => {
     const data = form.values;
-    console.log(data);
-    navigate('/');
+
+    validateOTPMutation.mutate(
+      {
+        data: { email: data.email, otp: data.otp, device_id: '1234321' },
+      },
+      {
+        onSuccess: () => {
+          navigate('/login', { state: { email: data.email } });
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Unauthorized)
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP is not valid',
+              });
+            else if (error.response.status === 410)
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP has been expired..',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('signup.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -67,57 +142,49 @@ export default function Signup() {
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
             <TextInput
-              label="Name"
+              required
+              label={t('signup.nameLabel')}
               data-testid="name-input"
-              placeholder="Your name"
+              placeholder={t('signup.namePlaceholder')}
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+              error={form.errors.name && 'Enter your name'}
               radius="md"
             />
 
             <TextInput
               required
-              label="Email"
+              label={t('signup.emailLabel')}
               data-testid="email-input"
-              placeholder="hello@mantine.dev"
+              placeholder={t('signup.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('signup.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
+              label={t('signup.passwordLabel')}
               data-testid="password-input"
-              placeholder="Your password"
+              placeholder={t('signup.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('signup.invalidPasswordError')}
               radius="md"
-            />
-
-            <Checkbox
-              label="Register as a vendor"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue('terms', event.currentTarget.checked)
-              }
             />
 
             {showOtpInput && (
               <TextInput
                 required
-                label="Enter OTP"
-                placeholder="123456"
+                label={t('signup.otpLabel')}
+                placeholder={t('signup.otpPlaceholder')}
                 data-testid="OTP-input"
                 value={form.values.otp}
                 onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
-                error={form.errors.otp && 'Invalid OTP'}
+                error={form.errors.otp && t('signup.invalidOTPError')}
                 radius="md"
               />
             )}
@@ -131,7 +198,7 @@ export default function Signup() {
               onClick={() => navigate('/login')}
               size="xs"
             >
-              {'Already have an account? Login'}
+              {t('signup.loginPrompt')}
             </Anchor>
 
             {showOtpInput ? (
@@ -141,11 +208,11 @@ export default function Signup() {
                 radius="xl"
                 data-testid="button-validation"
               >
-                {'Validate OTP'}
+                {t('signup.validateOTPButton')}
               </Button>
             ) : (
               <Button type="submit" radius="xl" data-testid="button-signup">
-                {'Register'}
+                {t('signup.registerButton')}
               </Button>
             )}
           </Group>
@@ -153,4 +220,6 @@ export default function Signup() {
       </Paper>
     </Flex>
   );
-}
+};
+
+export default Signup;

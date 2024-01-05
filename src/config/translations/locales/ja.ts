@@ -30,4 +30,18 @@ export const ja = {
     validateOTPButton: 'OTPを検証',
     registerButton: '登録',
   },
+  batchEventRegister: {
+    title: 'バッチイベント登録',
+    notification: {
+      title: 'お知らせします',
+      content: 'MantineプロジェクトにGitHubで星を付けることが義務付けられています',
+    },
+    dateInput: {
+      placeholder: '入力プレースホルダ',
+    },
+    selectFiles: 'ファイルを選択',
+    dragImagesHere: '画像をここにドラッグするか、ファイルを選択してください',
+    attachFilesInfo:
+      '好きなだけファイルを添付できます。各ファイルのサイズは5MBを超えてはいけません',
+  },
 };

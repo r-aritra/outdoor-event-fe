@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Group, Text, rem, Button, Box } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
@@ -7,27 +8,24 @@ import { DateInput } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
 import { Notification } from '@mantine/core';
 
-export default function BatchEventRegister(props: Partial<DropzoneProps>) {
+const BatchEventRegister: React.FC = (props: Partial<DropzoneProps>) => {
   const openRef = useRef<() => void>(null);
+  const { t } = useTranslation();
 
   const handleDrop = async (files: File[]) => {
     const file = files[0];
 
     try {
-      // Read the file as a binary string
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target?.result as string;
 
-        // Parse the binary string using xlsx library
         const workbook = XLSX.read(data, { type: 'binary' });
 
-        // Convert the first sheet to JSON
         const jsonData = XLSX.utils.sheet_to_json(
           workbook.Sheets[workbook.SheetNames[0]],
         );
 
-        // Log the resulting JSON data
         console.log('Parsed JSON:', jsonData);
       };
 
@@ -41,25 +39,26 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
     <>
       <Box>
         <Text size="xl" fw={700}>
-          Batch Evant Register
+          {t('batchEventRegister.title')}
         </Text>
 
-        <Notification title="We notify you that">
-          You are now obligated to give a star to Mantine project on GitHub
+        <Notification title={t('batchEventRegister.notification.title')}>
+          {t('batchEventRegister.notification.content')}
         </Notification>
 
         <Group mt="md" mb="20px" style={{ justifyContent: 'space-between' }}>
           <DateInput
             miw={144}
             maw={400}
-            placeholder="Input placeholder"
+            placeholder={t('batchEventRegister.dateInput.placeholder')}
             rightSectionWidth={40}
             rightSection={<IconCalendarEvent />}
           />
-          <Button onClick={() => openRef.current?.()}>Select files</Button>
+          <Button onClick={() => openRef.current?.()}>
+            {t('batchEventRegister.selectFiles')}
+          </Button>
         </Group>
 
-        {/* Dropzone component */}
         <Dropzone
           onDrop={handleDrop}
           onReject={(rejectedFiles) => console.log('rejected files', rejectedFiles)}
@@ -102,10 +101,10 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
 
             <div>
               <Text size="xl" inline>
-                Drag images here or click to select files
+                {t('batchEventRegister.dragImagesHere')}
               </Text>
               <Text size="sm" c="dimmed" inline mt={7}>
-                Attach as many files as you like, each file should not exceed 5mb
+                {t('batchEventRegister.attachFilesInfo')}
               </Text>
             </div>
           </Group>
@@ -113,4 +112,6 @@ export default function BatchEventRegister(props: Partial<DropzoneProps>) {
       </Box>
     </>
   );
-}
+};
+
+export default BatchEventRegister;

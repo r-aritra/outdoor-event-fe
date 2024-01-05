@@ -6,6 +6,7 @@ import type { Preview } from '@storybook/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import '../src/config/translations/i18n';
 const queryClient = new QueryClient();
 
 const preview: Preview = {

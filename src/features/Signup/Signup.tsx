@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
@@ -16,7 +17,9 @@ import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Signup() {
+function Signup() {
+  const { t } = useTranslation();
+
   const [visible, setVisible] = useState(false);
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
@@ -28,11 +31,11 @@ export default function Signup() {
       terms: true,
       otp: '',
     },
-
     validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+      email: (val: string) =>
+        /^\S+@\S+$/.test(val) ? null : t('signup.invalidEmailError'),
       password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
+        val.length <= 6 ? t('signup.invalidPasswordError') : null,
     },
   });
 
@@ -40,8 +43,6 @@ export default function Signup() {
     setVisible(true);
     const data = form.values;
     console.log(data);
-    // Add logic for OTP verification here
-    // For demonstration purposes, let's assume OTP verification is successful
     setShowOtpInput(true);
     setVisible(false);
   };
@@ -49,8 +50,6 @@ export default function Signup() {
   const handleOtpSubmit = () => {
     const data = form.values;
     console.log(data);
-    // Add logic for OTP validation here
-    // For demonstration purposes, let's assume OTP validation is successful
     navigate('/');
   };
 
@@ -63,7 +62,7 @@ export default function Signup() {
       />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('signup.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -71,8 +70,9 @@ export default function Signup() {
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
             <TextInput
-              label="Name"
-              placeholder="Your name"
+              label={t('signup.nameLabel')}
+              data-testid="name-input"
+              placeholder={t('signup.namePlaceholder')}
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
               radius="md"
@@ -80,31 +80,31 @@ export default function Signup() {
 
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              label={t('signup.emailLabel')}
+              data-testid="email-input"
+              placeholder={t('signup.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('signup.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              label={t('signup.passwordLabel')}
+              data-testid="password-input"
+              placeholder={t('signup.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('signup.invalidPasswordError')}
               radius="md"
             />
 
             <Checkbox
-              label="Register as a vendor"
-              // checked={form.values.terms}
+              label={t('signup.vendorRegisterLabel')}
+              checked={form.values.terms}
               onChange={(event) =>
                 form.setFieldValue('terms', event.currentTarget.checked)
               }
@@ -113,11 +113,12 @@ export default function Signup() {
             {showOtpInput && (
               <TextInput
                 required
-                label="Enter OTP"
-                placeholder="123456"
+                label={t('signup.otpLabel')}
+                placeholder={t('signup.otpPlaceholder')}
+                data-testid="OTP-input"
                 value={form.values.otp}
                 onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
-                error={form.errors.otp && 'Invalid OTP'}
+                error={form.errors.otp && t('signup.invalidOTPError')}
                 radius="md"
               />
             )}
@@ -131,16 +132,21 @@ export default function Signup() {
               onClick={() => navigate('/login')}
               size="xs"
             >
-              {'Already have an account? Login'}
+              {t('signup.loginPrompt')}
             </Anchor>
 
             {showOtpInput ? (
-              <Button type="button" onClick={handleOtpSubmit} radius="xl">
-                {'Validate OTP'}
+              <Button
+                type="button"
+                onClick={handleOtpSubmit}
+                radius="xl"
+                data-testid="button-validation"
+              >
+                {t('signup.validateOTPButton')}
               </Button>
             ) : (
-              <Button type="submit" radius="xl">
-                {'Register'}
+              <Button type="submit" radius="xl" data-testid="button-signup">
+                {t('signup.registerButton')}
               </Button>
             )}
           </Group>
@@ -149,3 +155,5 @@ export default function Signup() {
     </Flex>
   );
 }
+
+export default Signup;

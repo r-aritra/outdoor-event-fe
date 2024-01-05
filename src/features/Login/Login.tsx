@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
@@ -15,7 +16,9 @@ import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+function Login() {
+  const { t } = useTranslation();
+
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
@@ -25,11 +28,11 @@ export default function Login() {
       password: '',
       terms: true,
     },
-
     validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+      email: (val: string) =>
+        /^\S+@\S+$/.test(val) ? null : t('login.invalidEmailError'),
       password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
+        val.length <= 6 ? t('login.invalidPasswordError') : null,
     },
   });
 
@@ -50,7 +53,7 @@ export default function Login() {
       />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('login.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -59,25 +62,25 @@ export default function Login() {
           <Stack>
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              data-testid="email-input"
+              label={t('login.emailLabel')}
+              placeholder={t('login.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('login.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              data-testid="password-input"
+              label={t('login.passwordLabel')}
+              placeholder={t('login.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('login.invalidPasswordError')}
               radius="md"
             />
           </Stack>
@@ -90,10 +93,10 @@ export default function Login() {
               size="xs"
               onClick={() => navigate('/signup')}
             >
-              {"Don't have an account? Register"}{' '}
+              {t('login.registerPrompt')}
             </Anchor>
-            <Button type="submit" radius="xl">
-              {'Login'}
+            <Button type="submit" radius="xl" data-testid="button-login">
+              {t('login.loginButton')}
             </Button>
           </Group>
         </form>
@@ -101,3 +104,5 @@ export default function Login() {
     </Flex>
   );
 }
+
+export default Login;

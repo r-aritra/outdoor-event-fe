@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
@@ -18,7 +19,9 @@ import { HttpStatusCode } from 'axios';
 import { SignupValidation } from './SignupValidation';
 import showNotification from '../../utils/appNotification';
 
-export default function Signup() {
+function Signup() {
+  const { t } = useTranslation();
+
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
@@ -131,7 +134,7 @@ export default function Signup() {
     <Flex justify="center" align="center" mih={'100vh'}>
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('signup.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -140,8 +143,9 @@ export default function Signup() {
           <Stack>
             <TextInput
               required
-              label="Name"
-              placeholder="Your name"
+              label={t('signup.nameLabel')}
+              data-testid="name-input"
+              placeholder={t('signup.namePlaceholder')}
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
               error={form.errors.name && 'Enter your name'}
@@ -150,36 +154,37 @@ export default function Signup() {
 
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              label={t('signup.emailLabel')}
+              data-testid="email-input"
+              placeholder={t('signup.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('signup.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              label={t('signup.passwordLabel')}
+              data-testid="password-input"
+              placeholder={t('signup.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('signup.invalidPasswordError')}
               radius="md"
             />
 
             {showOtpInput && (
               <TextInput
                 required
-                label="Enter OTP"
-                placeholder="123456"
+                label={t('signup.otpLabel')}
+                placeholder={t('signup.otpPlaceholder')}
+                data-testid="OTP-input"
                 value={form.values.otp}
                 onChange={(event) => form.setFieldValue('otp', event.currentTarget.value)}
-                error={form.errors.otp && 'Invalid OTP'}
+                error={form.errors.otp && t('signup.invalidOTPError')}
                 radius="md"
               />
             )}
@@ -193,16 +198,21 @@ export default function Signup() {
               onClick={() => navigate('/login')}
               size="xs"
             >
-              {'Already have an account? Login'}
+              {t('signup.loginPrompt')}
             </Anchor>
 
             {showOtpInput ? (
-              <Button type="button" onClick={handleOtpSubmit} radius="xl">
-                {'Validate OTP'}
+              <Button
+                type="button"
+                onClick={handleOtpSubmit}
+                radius="xl"
+                data-testid="button-validation"
+              >
+                {t('signup.validateOTPButton')}
               </Button>
             ) : (
-              <Button type="submit" radius="xl">
-                {'Register'}
+              <Button type="submit" radius="xl" data-testid="button-signup">
+                {t('signup.registerButton')}
               </Button>
             )}
           </Group>
@@ -211,3 +221,5 @@ export default function Signup() {
     </Flex>
   );
 }
+
+export default Signup;

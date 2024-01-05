@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
@@ -17,7 +18,9 @@ import { HttpStatusCode } from 'axios';
 import { LoginValidation } from './LoginValidation';
 import showNotification from '../../utils/appNotification';
 
-export default function Login() {
+function Login() {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
@@ -25,6 +28,7 @@ export default function Login() {
     initialValues: {
       email: state ? state.email : '',
       password: '',
+      terms: true,
     },
     validate: zodResolver(LoginValidation()),
     validateInputOnChange: true,
@@ -70,7 +74,7 @@ export default function Login() {
     <Flex justify="center" align="center" mih={'100vh'}>
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('login.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -79,25 +83,25 @@ export default function Login() {
           <Stack>
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              data-testid="email-input"
+              label={t('login.emailLabel')}
+              placeholder={t('login.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('login.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              data-testid="password-input"
+              label={t('login.passwordLabel')}
+              placeholder={t('login.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('login.invalidPasswordError')}
               radius="md"
             />
           </Stack>
@@ -110,10 +114,10 @@ export default function Login() {
               size="xs"
               onClick={() => navigate('/signup')}
             >
-              {"Don't have an account? Register"}{' '}
+              {t('login.registerPrompt')}
             </Anchor>
-            <Button type="submit" radius="xl">
-              {'Login'}
+            <Button type="submit" radius="xl" data-testid="button-login">
+              {t('login.loginButton')}
             </Button>
           </Group>
         </form>
@@ -121,3 +125,5 @@ export default function Login() {
     </Flex>
   );
 }
+
+export default Login;

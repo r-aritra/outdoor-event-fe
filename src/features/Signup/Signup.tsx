@@ -2,25 +2,26 @@ import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
-  Checkbox,
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRegisterUser, useSendOTP, useValidateOTP } from '../../models/api';
+import { HttpStatusCode } from 'axios';
+import { SignupValidation } from './SignupValidation';
+import showNotification from '../../utils/appNotification';
 
-function Signup() {
+const Signup: React.FC = () => {
   const { t } = useTranslation();
 
-  const [visible, setVisible] = useState(false);
   const [showOtpInput, setShowOtpInput] = useState(false);
   const navigate = useNavigate();
   const form = useForm({
@@ -28,38 +29,109 @@ function Signup() {
       email: '',
       name: '',
       password: '',
-      terms: true,
       otp: '',
     },
-    validate: {
-      email: (val: string) =>
-        /^\S+@\S+$/.test(val) ? null : t('signup.invalidEmailError'),
-      password: (val: string) =>
-        val.length <= 6 ? t('signup.invalidPasswordError') : null,
-    },
+
+    validate: zodResolver(SignupValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
   });
 
-  const handleSubmit = async () => {
-    setVisible(true);
+  const signInMutation = useRegisterUser();
+  const sendOTPMutation = useSendOTP();
+  const validateOTPMutation = useValidateOTP();
+
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
-    setShowOtpInput(true);
-    setVisible(false);
+
+    signInMutation.mutate(
+      {
+        data: { name: data.name, email: data.email, password: data.password },
+      },
+      {
+        onSuccess: () => {
+          sendOTPMutation.mutate(
+            {
+              data: { email: data.email, device_id: '1234321' },
+            },
+            {
+              onSuccess: () => {
+                showNotification({
+                  type: 'success',
+                  title: 'Successful',
+                  message: 'OTP has been send to your email',
+                });
+                setShowOtpInput(true);
+              },
+              onError: (sendOTPError) => {
+                showNotification({
+                  type: 'error',
+                  title: 'Send OTP error:',
+                  message: sendOTPError.message,
+                });
+              },
+            },
+          );
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Conflict)
+              showNotification({
+                type: 'error',
+                title: 'User exist',
+                message: 'User already exist try another one',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   const handleOtpSubmit = () => {
     const data = form.values;
-    console.log(data);
-    navigate('/');
+
+    validateOTPMutation.mutate(
+      {
+        data: { email: data.email, otp: data.otp, device_id: '1234321' },
+      },
+      {
+        onSuccess: () => {
+          navigate('/login', { state: { email: data.email } });
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.Unauthorized)
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP is not valid',
+              });
+            else if (error.response.status === 410)
+              showNotification({
+                type: 'error',
+                title: 'Opp..',
+                message: 'OTP has been expired..',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
           {t('signup.welcome')}
@@ -70,11 +142,13 @@ function Signup() {
         <form onSubmit={form.onSubmit(() => handleSubmit())}>
           <Stack>
             <TextInput
+              required
               label={t('signup.nameLabel')}
               data-testid="name-input"
               placeholder={t('signup.namePlaceholder')}
               value={form.values.name}
               onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+              error={form.errors.name && 'Enter your name'}
               radius="md"
             />
 
@@ -100,14 +174,6 @@ function Signup() {
               }
               error={form.errors.password && t('signup.invalidPasswordError')}
               radius="md"
-            />
-
-            <Checkbox
-              label={t('signup.vendorRegisterLabel')}
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue('terms', event.currentTarget.checked)
-              }
             />
 
             {showOtpInput && (
@@ -154,6 +220,6 @@ function Signup() {
       </Paper>
     </Flex>
   );
-}
+};
 
 export default Signup;

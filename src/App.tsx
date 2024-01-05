@@ -1,18 +1,31 @@
 import '@mantine/core/styles.css';
-
+import '@mantine/notifications/styles.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoutes from './router/AppRoutes';
 import { MantineProvider } from '@mantine/core';
-const queryClient = new QueryClient();
+import { Notifications } from '@mantine/notifications';
+import { Suspense } from 'react';
+import { AppLoading } from './layout/Loading';
 
-function App() {
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
+
+const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider>
-        <AppRoutes />
+        <Suspense fallback={<AppLoading />}>
+          <Notifications />
+          <AppRoutes />
+        </Suspense>
       </MantineProvider>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;

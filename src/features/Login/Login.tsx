@@ -5,52 +5,73 @@ import {
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useForm, zodResolver } from '@mantine/form';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useLogin } from '../../models/api';
+import { HttpStatusCode } from 'axios';
+import { loginValidation } from './LoginValidation';
+import showNotification from '../../utils/appNotification';
 
-function Login() {
+const Login: React.FC = () => {
   const { t } = useTranslation();
 
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
   const form = useForm({
     initialValues: {
-      email: '',
-      name: '',
+      email: state ? state.email : '',
       password: '',
       terms: true,
     },
-    validate: {
-      email: (val: string) =>
-        /^\S+@\S+$/.test(val) ? null : t('login.invalidEmailError'),
-      password: (val: string) =>
-        val.length <= 6 ? t('login.invalidPasswordError') : null,
-    },
+    validate: zodResolver(loginValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
   });
 
-  const handleSubmit = async () => {
-    setVisible(true);
+  const loginMutation = useLogin();
+
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
-    navigate('/');
-    setVisible(false);
+
+    loginMutation.mutate(
+      {
+        data: { ...data, device_id: '1234321', device_type: 'web' },
+      },
+      {
+        onSuccess: (responseData) => {
+          localStorage.setItem('accessToken', responseData.data.access_token);
+          localStorage.setItem('refreshToken', responseData.data.refresh_token);
+          navigate('/');
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.NotFound)
+              showNotification({
+                type: 'error',
+                title: 'User Not Found',
+                message: 'Enter valid data ......',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
           {t('login.welcome')}
@@ -103,6 +124,6 @@ function Login() {
       </Paper>
     </Flex>
   );
-}
+};
 
 export default Login;

@@ -1,56 +1,80 @@
+import { useTranslation } from 'react-i18next';
 import {
   Anchor,
   Button,
   Divider,
   Flex,
   Group,
-  LoadingOverlay,
   Paper,
   PasswordInput,
   Stack,
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useForm, zodResolver } from '@mantine/form';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useLogin } from '../../models/api';
+import { HttpStatusCode } from 'axios';
+import { loginValidation } from './LoginValidation';
+import showNotification from '../../utils/appNotification';
 
-export default function Login() {
-  const [visible, setVisible] = useState(false);
+const Login: React.FC = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
   const form = useForm({
     initialValues: {
-      email: '',
-      name: '',
+      email: state ? state.email : '',
       password: '',
       terms: true,
     },
-
-    validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val: string) =>
-        val.length <= 6 ? 'Password should include at least 6 characters' : null,
-    },
+    validate: zodResolver(loginValidation()),
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
   });
 
-  const handleSubmit = async () => {
-    setVisible(true);
+  const loginMutation = useLogin();
+
+  const handleSubmit = () => {
     const data = form.values;
-    console.log(data);
-    navigate('/');
-    setVisible(false);
+
+    loginMutation.mutate(
+      {
+        data: { ...data, device_id: '1234321', device_type: 'web' },
+      },
+      {
+        onSuccess: (responseData) => {
+          localStorage.setItem('accessToken', responseData.data.access_token);
+          localStorage.setItem('refreshToken', responseData.data.refresh_token);
+          navigate('/');
+        },
+        onError: (error) => {
+          if (error.response) {
+            if (error.response.status === HttpStatusCode.NotFound)
+              showNotification({
+                type: 'error',
+                title: 'User Not Found',
+                message: 'Enter valid data ......',
+              });
+            else
+              showNotification({
+                type: 'error',
+                title: 'Network or other error:',
+                message: error.message,
+              });
+          }
+        },
+      },
+    );
   };
 
   return (
     <Flex justify="center" align="center" mih={'100vh'}>
-      <LoadingOverlay
-        visible={visible}
-        zIndex={1000}
-        overlayProps={{ radius: 'sm', blur: 2 }}
-      />
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" fw={500}>
-          Welcome to booking.com
+          {t('login.welcome')}
         </Text>
 
         <Divider my="lg" />
@@ -59,25 +83,25 @@ export default function Login() {
           <Stack>
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              data-testid="email-input"
+              label={t('login.emailLabel')}
+              placeholder={t('login.emailPlaceholder')}
               value={form.values.email}
               onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-              error={form.errors.email && 'Invalid email'}
+              error={form.errors.email && t('login.invalidEmailError')}
               radius="md"
             />
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              data-testid="password-input"
+              label={t('login.passwordLabel')}
+              placeholder={t('login.passwordPlaceholder')}
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue('password', event.currentTarget.value)
               }
-              error={
-                form.errors.password && 'Password should include at least 6 characters'
-              }
+              error={form.errors.password && t('login.invalidPasswordError')}
               radius="md"
             />
           </Stack>
@@ -90,14 +114,16 @@ export default function Login() {
               size="xs"
               onClick={() => navigate('/signup')}
             >
-              {"Don't have an account? Register"}{' '}
+              {t('login.registerPrompt')}
             </Anchor>
-            <Button type="submit" radius="xl">
-              {'Login'}
+            <Button type="submit" radius="xl" data-testid="button-login">
+              {t('login.loginButton')}
             </Button>
           </Group>
         </form>
       </Paper>
     </Flex>
   );
-}
+};
+
+export default Login;

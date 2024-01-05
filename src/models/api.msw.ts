@@ -8,58 +8,34 @@ import { faker } from '@faker-js/faker';
 import { HttpResponse, delay, http } from 'msw';
 
 export const getRegisterUserMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  message: faker.word.sample(),
 });
 
 export const getRegisterVendorMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  message: faker.word.sample(),
 });
 
 export const getSendOTPMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  message: faker.word.sample(),
 });
 
 export const getValidateOTPMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  message: faker.word.sample(),
 });
 
 export const getLoginMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  data: faker.helpers.arrayElement([
-    {
-      access_token: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-      refresh_token: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-    },
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  data: { access_token: faker.word.sample(), refresh_token: faker.word.sample() },
+  message: faker.word.sample(),
 });
 
 export const getVerifyUserMock = () => ({
-  code: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
+  code: faker.number.int({ min: undefined, max: undefined }),
+  message: faker.word.sample(),
 });
 
 export const getOutdoorEventBookingAPIMock = () => [

@@ -175,6 +175,8 @@ components:
       properties:
         email:
           type: string
+      required:
+        - email
         
     LoginRequest:
       type: object
@@ -187,6 +189,11 @@ components:
           type: string
         device_type:
           type: string
+      required:
+        - email
+        - password
+        - device_id
+        - device_type
 
     SendOTPRequest:
       type: object
@@ -195,6 +202,9 @@ components:
           type: string
         device_id:
           type: string
+      required:
+        - email
+        - device_id
           
     ValidateOTPRequest:
       type: object
@@ -205,6 +215,10 @@ components:
           type: string
         device_id:
           type: string
+      required:
+        - email
+        - otp
+        - device_id
           
     Login:
       type: object
@@ -224,6 +238,13 @@ components:
             refresh_token:
               type: string
               example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc5LCJyb2xlcyI6InVzZXIiLCJpYXQiOjE3MDI1NDg5OTUsImV4cCI6MTcwMzE1Mzc5NX0.vS-Y1Xa6-K1GVHW9HsiyJvPd86uaiG3wlMz4yhGA4Y8"
+          required:
+            - access_token
+            - refresh_token
+      required:
+        - code
+        - message
+        - data
           
     OTPValidate:
       type: object
@@ -234,6 +255,9 @@ components:
         message:
           type: string
           example: OTP has been verified
+      required:
+        - code
+        - message
         
     UserCreated:
       type: object
@@ -244,6 +268,9 @@ components:
         message:
           type: string
           example: User created successfully
+      required:
+        - code
+        - message
           
     DataAlreadyExists:
       type: object
@@ -254,6 +281,9 @@ components:
         message:
           type: string
           example: Data already exist
+      required:
+        - code
+        - message
           
     OTPNotValid:
       type: object
@@ -264,6 +294,9 @@ components:
         message:
           type: string
           example: OTP is not valid
+      required:
+        - code
+        - message
           
     OTPExpired:
       type: object
@@ -274,6 +307,9 @@ components:
         message:
           type: string
           example: OTP has been expired
+      required:
+        - code
+        - message
 
     DataNotFound:
       type: object
@@ -284,6 +320,9 @@ components:
         message:
           type: string
           example: Data not found
+      required:
+        - code
+        - message
           
     Ok:
       type: object
@@ -294,3 +333,6 @@ components:
         message:
           type: string
           example: OK
+      required:
+        - code
+        - message

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const LoginValidation = () =>
+export const loginValidation = () =>
   z.object({
     email: z
       .string({

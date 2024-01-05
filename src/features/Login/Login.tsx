@@ -15,7 +15,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogin } from '../../models/api';
 import { HttpStatusCode } from 'axios';
-import { LoginValidation } from './LoginValidation';
+import { loginValidation } from './LoginValidation';
 import showNotification from '../../utils/appNotification';
 
 const Login: React.FC = () => {
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
       password: '',
       terms: true,
     },
-    validate: zodResolver(LoginValidation()),
+    validate: zodResolver(loginValidation()),
     validateInputOnChange: true,
     validateInputOnBlur: true,
   });

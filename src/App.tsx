@@ -15,7 +15,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-function App() {
+const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider>
@@ -26,6 +26,6 @@ function App() {
       </MantineProvider>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;

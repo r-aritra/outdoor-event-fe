@@ -30,7 +30,10 @@ export default function AppNavbar() {
   const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
 
   return (
-    <nav className={classes.navbar}>
+    <nav
+      className={classes.navbar}
+      style={{ backgroundColor: '#1B1E28', height: '100vh', color: 'white' }}
+    >
       <ScrollArea className={classes.links}>
         <div className={classes.linksInner}>{links}</div>
       </ScrollArea>

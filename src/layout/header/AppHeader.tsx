@@ -23,7 +23,7 @@ const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Burger opened={opened} onClick={onBurgerClick} color={'#A6A7AB'} />
         <Image
-          src={'/src/layout/header/logo.png'}
+          src={'/src/layout/header/jare.png'}
           height={'40'}
           width={'200'}
           alt="logo"

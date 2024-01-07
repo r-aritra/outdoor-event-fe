@@ -16,14 +16,18 @@ function AppLayout() {
     <AppShell
       header={{ height: 70 }}
       navbar={{
-        width: { lg: 250 },
+        width: 250,
         breakpoint: 'sm',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding="md"
     >
       <AppShell.Header>
-        <AppHeader opened={desktopOpened} onBurgerClick={toggleDesktop} />
+        <AppHeader
+          opened={desktopOpened}
+          onBurgerClick={toggleDesktop}
+          onMobileBurgerClick={toggleMobile}
+        />
       </AppShell.Header>
       <AppShell.Navbar>
         <AppNavbar />

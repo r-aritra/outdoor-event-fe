@@ -6,9 +6,14 @@ import { useTranslation } from 'react-i18next';
 interface HeaderProps {
   opened: boolean;
   onBurgerClick: () => void;
+  onMobileBurgerClick: () => void;
 }
 
-const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
+const AppHeader: React.FC<HeaderProps> = ({
+  opened,
+  onBurgerClick,
+  onMobileBurgerClick,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -21,7 +26,13 @@ const AppHeader: React.FC<HeaderProps> = ({ opened, onBurgerClick }) => {
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Burger opened={opened} onClick={onBurgerClick} color={'#A6A7AB'} />
+        <Burger
+          opened={opened}
+          onClick={() => {
+            window.innerWidth < 550 ? onMobileBurgerClick() : onBurgerClick();
+          }}
+          color={'#A6A7AB'}
+        />
         <Image
           src={'/src/layout/header/jare.png'}
           height={'40'}

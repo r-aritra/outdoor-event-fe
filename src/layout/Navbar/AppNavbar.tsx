@@ -26,7 +26,7 @@ const mockdata = [
   },
 ];
 
-const AppLayout: React.FC = () => {
+const AppNavbar: React.FC = () => {
   const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
 
   return (
@@ -41,4 +41,4 @@ const AppLayout: React.FC = () => {
   );
 };
 
-export default AppLayout;
+export default AppNavbar;

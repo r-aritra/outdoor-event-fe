@@ -22,7 +22,7 @@ const isAuthenticated = true;
 const batchEventRoutes = [
   {
     path: 'batch-event/results',
-    element: <BatchEventApprove />,
+    element: <BatchEventResults />,
   },
   {
     path: 'batch-event/register',
@@ -30,7 +30,7 @@ const batchEventRoutes = [
   },
   {
     path: 'batch-event/approve',
-    element: <BatchEventResults />,
+    element: <BatchEventApprove />,
   },
 ];
 

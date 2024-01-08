@@ -26,7 +26,7 @@ const mockdata = [
   },
 ];
 
-export default function AppNavbar() {
+const AppLayout: React.FC = () => {
   const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
 
   return (
@@ -39,4 +39,6 @@ export default function AppNavbar() {
       </ScrollArea>
     </nav>
   );
-}
+};
+
+export default AppLayout;

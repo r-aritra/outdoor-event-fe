@@ -59,7 +59,7 @@ export const AppProvider: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider>
-        <RouterProvider router={router} fallbackElement={<p>hi</p>} />
+        <RouterProvider router={router} />
       </MantineProvider>
     </QueryClientProvider>
   );

@@ -1,6 +1,6 @@
 // Header.tsx
 import React from 'react';
-import { Burger, Divider, Image, Menu, Text, rem } from '@mantine/core';
+import { Burger, Divider, Image, Menu, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { IconLanguage } from '@tabler/icons-react';
 interface HeaderProps {

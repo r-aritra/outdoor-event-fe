@@ -8,7 +8,7 @@ import AppNavbar from './Navbar/AppNavbar';
 import { AppLoading } from './Loading';
 import { Notifications } from '@mantine/notifications';
 
-function AppLayout() {
+const AppLayout: React.FC = () => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
@@ -40,6 +40,6 @@ function AppLayout() {
       </AppShell.Main>
     </AppShell>
   );
-}
+};
 
 export default AppLayout;

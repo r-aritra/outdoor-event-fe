@@ -30,4 +30,28 @@ export const en = {
     validateOTPButton: 'Validate OTP',
     registerButton: 'Register',
   },
+  batchEventRegister: {
+    title: 'Batch Event Register',
+    notification: {
+      title: 'We notify you that',
+      content: 'You are now obligated to give a star to Mantine project on GitHub',
+    },
+    dateInput: {
+      placeholder: 'Input placeholder',
+    },
+    selectFiles: 'Select files',
+    dragImagesHere: 'Drag images here or click to select files',
+    attachFilesInfo: 'Attach as many files as you like, each file should not exceed 5mb',
+  },
+  appNavbar: {
+    dashboard: 'Dashboard',
+    batchEvent: 'Batch Event',
+    batchEventRegister: 'Batch Event Register',
+    batchEventResults: 'Batch Event Results',
+    batchEventApprove: 'Batch Event Approve',
+  },
+  appHeader: {
+    dashboard: 'Batch Event Register Dashboard',
+    userId: 'User ID',
+  },
 };

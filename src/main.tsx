@@ -1,16 +1,15 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import './config/translations/i18n';
+import { StrictMode } from 'react';
+import { App } from './App';
 
-import App from './App';
 import { worker } from './test/mocks/browser';
 
 worker.start({
   onUnhandledRequest: 'bypass',
 });
 
-const element = document.getElementById('root');
-const root = createRoot(element!);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <StrictMode>
     <App />

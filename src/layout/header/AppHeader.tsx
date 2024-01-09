@@ -2,6 +2,7 @@
 import React from 'react';
 import { Burger, Divider, Image, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import './AppHeader.css';
 
 interface HeaderProps {
   opened: boolean;
@@ -25,7 +26,9 @@ const AppHeader: React.FC<HeaderProps> = ({
         alignItems: 'center',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
         <Burger
           opened={opened}
           onClick={() => {
@@ -36,27 +39,21 @@ const AppHeader: React.FC<HeaderProps> = ({
         <Image
           src={'/src/layout/header/jare.png'}
           height={'40'}
-          width={'200'}
+          width={'auto'}
           alt="logo"
-          style={{ marginLeft: '10px' }}
+          style={{ marginLeft: '1rem' }}
         />
-        <Divider
-          size="sm"
-          orientation="vertical"
-          style={{ marginLeft: '10px', marginRight: '10px' }}
-        />
-        <Text size="xl" fw={500}>
-          {t('appHeader.dashboard')}
-        </Text>
+        <Divider size="sm" orientation="vertical" style={{ marginRight: '1rem' }} />
+        <div className="name">
+          <Text size="lg" fw={500}>
+            {t('appHeader.dashboard')}
+          </Text>
+        </div>
       </div>
 
       <div>
-        <div>
-          <Text fz="sm" ta="right" ml={8}>
-            rutvik
-          </Text>
-        </div>
-        {t('appHeader.userId')}: 304
+        <Text size="sm">rutvik</Text>
+        <Text size="sm">{t('appHeader.userId')}: 222</Text>
       </div>
     </div>
   );

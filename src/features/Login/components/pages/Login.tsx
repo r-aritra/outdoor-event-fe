@@ -13,10 +13,10 @@ import {
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useLogin } from '../../models/api';
+import { useLogin } from '../../../../models/api';
 import { HttpStatusCode } from 'axios';
-import { loginValidation } from './LoginValidation';
-import showNotification from '../../utils/appNotification';
+import { loginValidation } from '../../LoginValidation';
+import showNotification from '../../../../utils/appNotification';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();

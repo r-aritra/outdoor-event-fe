@@ -1,8 +1,10 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+
+import { MantineProvider } from '@mantine/core';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppRoutes from './router/AppRoutes';
-import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { Suspense } from 'react';
 import { AppLoading } from './layout/Loading';

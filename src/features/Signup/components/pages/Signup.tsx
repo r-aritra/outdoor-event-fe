@@ -14,10 +14,10 @@ import {
 import { useForm, zodResolver } from '@mantine/form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRegisterUser, useSendOTP, useValidateOTP } from '../../models/api';
 import { HttpStatusCode } from 'axios';
-import { SignupValidation } from './SignupValidation';
-import showNotification from '../../utils/appNotification';
+import { useRegisterUser, useSendOTP, useValidateOTP } from '../../../../models/api';
+import showNotification from '../../../../utils/appNotification';
+import { SignupValidation } from '../../SignupValidation';
 
 const Signup: React.FC = () => {
   const { t } = useTranslation();

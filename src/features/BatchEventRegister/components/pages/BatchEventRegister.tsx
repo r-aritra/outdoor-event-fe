@@ -7,10 +7,12 @@ import * as XLSX from 'xlsx';
 import { DateInput } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
 import { Notification } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 const BatchEventRegister: React.FC = (props: Partial<DropzoneProps>) => {
   const openRef = useRef<() => void>(null);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleDrop = async (files: File[]) => {
     const file = files[0];
@@ -26,7 +28,7 @@ const BatchEventRegister: React.FC = (props: Partial<DropzoneProps>) => {
           workbook.Sheets[workbook.SheetNames[0]],
         );
 
-        console.log('Parsed JSON:', jsonData);
+        navigate('/batch-event/approve', { state: { data: jsonData } });
       };
 
       reader.readAsBinaryString(file);

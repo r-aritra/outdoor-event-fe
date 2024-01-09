@@ -6,7 +6,7 @@ import AppLayout from '../layout/AppLayout';
 import Login from '../features/Login/components/pages/Login';
 import Signup from '../features/Signup/components/pages/Signup';
 import BatchEventApprove from '../features/BatchEventApprove/BatchEventApprove';
-import BatchEventRegister from '../features/BatchEventRegister/BatchEventRegister';
+import BatchEventRegister from '../features/BatchEventRegister/components/pages/BatchEventRegister';
 import BatchEventResults from '../features/BatchEventResults/BatchEventResults';
 
 export const queryClient = new QueryClient({

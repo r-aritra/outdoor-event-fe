@@ -1,9 +1,21 @@
 import { ScrollArea } from '@mantine/core';
-import { IconGauge } from '@tabler/icons-react';
+import { IconNotes, IconGauge } from '@tabler/icons-react';
 import { LinksGroup } from './NavbarLinksGroup';
 import classes from './NavbarNested.module.css';
 
-const mockdata = [{ label: 'dashboard', icon: IconGauge }];
+const mockdata = [
+  { label: 'dashboard', icon: IconGauge },
+  {
+    label: 'batchEvent',
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [
+      { label: 'batchEventRegister', link: '/batch-event/register' },
+      { label: 'batchEventResults', link: '/batch-event/results' },
+      { label: 'batchEventApprove', link: '/batch-event/approve' },
+    ],
+  },
+];
 
 const AppNavbar: React.FC = () => {
   const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);

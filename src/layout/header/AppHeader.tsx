@@ -3,6 +3,8 @@ import React from 'react';
 import { Burger, Divider, Image, Menu, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { IconLanguage } from '@tabler/icons-react';
+import './AppHeader.css';
+
 interface HeaderProps {
   opened: boolean;
   onBurgerClick: () => void;
@@ -28,7 +30,9 @@ const AppHeader: React.FC<HeaderProps> = ({
         alignItems: 'center',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
         <Burger
           opened={opened}
           onClick={() => {
@@ -39,24 +43,28 @@ const AppHeader: React.FC<HeaderProps> = ({
         <Image
           src={'/src/layout/header/jare.png'}
           height={'40'}
-          width={'200'}
+          width={'auto'}
           alt="logo"
-          style={{ marginLeft: '10px' }}
         />
-        <Divider
-          size="sm"
-          orientation="vertical"
-          style={{ marginLeft: '10px', marginRight: '10px' }}
-        />
-        <Text size="xl" fw={500}>
-          {t('appHeader.dashboard')}
-        </Text>
+        <Divider size="sm" orientation="vertical" style={{ marginRight: '1rem' }} />
+        <div className="name">
+          <Text size="lg" fw={500}>
+            {t('appHeader.dashboard')}
+          </Text>
+        </div>
       </div>
 
-      <div style={{ display: 'flex', width: '170px', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          width: '10rem',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Menu shadow="md" width={100}>
           <Menu.Target>
-            <IconLanguage size={40} color="#A6A7AB" />
+            <IconLanguage size={30} color="#454545" />
           </Menu.Target>
 
           <Menu.Dropdown>

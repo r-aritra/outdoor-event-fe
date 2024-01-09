@@ -1,33 +1,11 @@
 import '@mantine/core/styles.css';
+import '@mantine/dropzone/styles.css';
+import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 
-import { MantineProvider } from '@mantine/core';
+import { AppProvider } from './providers/AppProvider';
+import { FC } from 'react';
 
-import { QueryClient, QueryClientProvider } from 'react-query';
-import AppRoutes from './router/AppRoutes';
-import { Notifications } from '@mantine/notifications';
-import { Suspense } from 'react';
-import { AppLoading } from './layout/Loading';
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
-});
-
-const App: React.FC = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider>
-        <Suspense fallback={<AppLoading />}>
-          <Notifications />
-          <AppRoutes />
-        </Suspense>
-      </MantineProvider>
-    </QueryClientProvider>
-  );
+export const App: FC = () => {
+  return <AppProvider />;
 };
-
-export default App;

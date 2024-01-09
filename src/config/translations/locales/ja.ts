@@ -30,4 +30,11 @@ export const ja = {
     validateOTPButton: 'OTPを検証',
     registerButton: '登録',
   },
+  appNavbar: {
+    dashboard: 'ダッシュボード',
+  },
+  appHeader: {
+    dashboard: 'バッチイベント登録ダッシュボード',
+    userId: 'ユーザーID',
+  },
 };

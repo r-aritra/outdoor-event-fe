@@ -1,7 +1,8 @@
 // Header.tsx
 import React from 'react';
-import { Burger, Divider, Image, Text } from '@mantine/core';
+import { Burger, Divider, Image, Menu, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import { IconLanguage } from '@tabler/icons-react';
 import './AppHeader.css';
 
 interface HeaderProps {
@@ -15,7 +16,10 @@ const AppHeader: React.FC<HeaderProps> = ({
   onBurgerClick,
   onMobileBurgerClick,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
 
   return (
     <div
@@ -50,13 +54,32 @@ const AppHeader: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          width: '10rem',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Menu shadow="md" width={100}>
+          <Menu.Target>
+            <IconLanguage size={30} color="#454545" />
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item onClick={() => changeLanguage('en')}>English</Menu.Item>
+            <Menu.Item onClick={() => changeLanguage('ja')}>Japanese</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
         <div>
-          <Text fz="sm" ta="right" ml={8}>
-            rutvik
-          </Text>
+          <div>
+            <Text fz="sm" ta="right" ml={8}>
+              rutvik
+            </Text>
+          </div>
+          {t('appHeader.userId')}: 304
         </div>
-        {t('appHeader.userId')}: 304
       </div>
     </div>
   );

@@ -30,4 +30,11 @@ export const en = {
     validateOTPButton: 'Validate OTP',
     registerButton: 'Register',
   },
+  appNavbar: {
+    dashboard: 'Dashboard',
+  },
+  appHeader: {
+    dashboard: 'Batch Event Register Dashboard',
+    userId: 'User ID',
+  },
 };

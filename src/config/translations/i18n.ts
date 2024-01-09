@@ -12,7 +12,7 @@ export const i18next = i18n
       en: { translation: en },
       ja: { translation: ja },
     },
-    lng: 'en',
+    lng: 'ja',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
